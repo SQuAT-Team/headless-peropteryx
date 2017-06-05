@@ -1,5 +1,7 @@
 package io.github.squat_team.util;
 
+import java.io.File;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -16,6 +18,8 @@ import org.palladiosimulator.pcm.resourceenvironment.ResourceenvironmentPackage;
 import org.palladiosimulator.pcm.system.SystemPackage;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 import org.palladiosimulator.pcm.usagemodel.UsagemodelPackage;
+
+import io.github.squat_team.model.PCMArchitectureInstance;
 
 public class SQuATHelper {
 	
@@ -35,6 +39,40 @@ public class SQuATHelper {
 		Resource resource = resourceSet.getResource(resourceURI, true);
 		EObject content = resource.getContents().get(0);
 		return content;
+	}
+	
+	/**
+	 * Deletes the architecture from the HDD.
+	 * 
+	 * @param architecture the architecture to delete.
+	 */
+	public static void delete(PCMArchitectureInstance architecture){
+		Allocation allocation = architecture.getAllocation();
+		Repository repository = architecture.getRepository();
+		ResourceEnvironment resourceEnvironment = architecture.getResourceEnvironment();
+		org.palladiosimulator.pcm.system.System system = architecture.getSystem();
+		UsageModel usageModel = architecture.getUsageModel();
+		
+		if (allocation != null && allocation.eResource() != null) {
+			delete(allocation.eResource());
+		}
+		if (repository != null && repository.eResource() != null) {
+			delete(repository.eResource());
+		}
+		if (resourceEnvironment != null && resourceEnvironment.eResource() != null) {
+			delete(resourceEnvironment.eResource());
+		}
+		if (system != null && system.eResource() != null) {
+			delete(system.eResource());
+		}
+		if (usageModel != null && usageModel.eResource() != null) {
+			delete(usageModel.eResource());
+		}
+	}
+	
+	private static void delete(Resource resource){
+		File file = new File(resource.getURI().toFileString());
+		file.delete();
 	}
 	
 	public static Repository loadRepositoryModel(String repositoryFile) {
