@@ -16,17 +16,17 @@ import org.palladiosimulator.solver.transformations.pcm2lqn.LqnXmlHandler;
 import de.uka.ipd.sdq.dsexplore.analysis.AnalysisFailedException;
 import de.uka.ipd.sdq.dsexplore.launch.DSELaunch;
 import de.uka.ipd.sdq.dsexplore.launch.DSEWorkflowConfiguration;
-import io.github.squat_team.performance.peropteryx.configuration.Configuration;
-import io.github.squat_team.performance.peropteryx.configuration.DSEWorkflowConfigurationBuilder;
-import io.github.squat_team.performance.peropteryx.overwrite.MyDSELaunch;
-import io.github.squat_team.performance.peropteryx.overwrite.analysis.MyLQNQualityAttributeDeclaration;
+import io.github.squat_team.performance.peropteryx.configuration.ConfigurationImprovedImproved;
+import io.github.squat_team.performance.peropteryx.configuration.DSEWorkflowConfigurationBuilderImproved;
+import io.github.squat_team.performance.peropteryx.overwrite.MyDSELaunchImrpoved;
+import io.github.squat_team.performance.peropteryx.overwrite.analysis.MyLQNQualityAttributeDeclarationImrpoved;
 
 /**
  * Extracts a LQNSResult from the the LQN solver output file.
  */
 public class LQNSResultExtractor {
 
-	public static LQNSResult extract(PCMInstance pcmInstance, Configuration configuration, String outputPath)
+	public static LQNSResult extract(PCMInstance pcmInstance, ConfigurationImprovedImproved configuration, String outputPath)
 			throws CoreException, AnalysisFailedException {
 		DSEWorkflowConfiguration dseConfiguration = buildDSEWorkflowConfiguration(configuration);
 		Criterion criterion = buildCriterion(pcmInstance, dseConfiguration);
@@ -34,17 +34,17 @@ public class LQNSResultExtractor {
 		return buildLQNSResult(pcmInstance, criterion, solverFilePath);
 	}
 
-	private static DSEWorkflowConfiguration buildDSEWorkflowConfiguration(Configuration configuration)
+	private static DSEWorkflowConfiguration buildDSEWorkflowConfiguration(ConfigurationImprovedImproved configuration)
 			throws CoreException {
-		DSELaunch launch = new MyDSELaunch(); // just uses reset debugger
-		DSEWorkflowConfigurationBuilder builder = new DSEWorkflowConfigurationBuilder();
+		DSELaunch launch = new MyDSELaunchImrpoved(); // just uses reset debugger
+		DSEWorkflowConfigurationBuilderImproved builder = new DSEWorkflowConfigurationBuilderImproved();
 		builder.init(configuration);
 		return builder.build(launch);
 	}
 
 	private static Criterion buildCriterion(PCMInstance pcmInstance, DSEWorkflowConfiguration dseConfiguration)
 			throws CoreException {
-		MyLQNQualityAttributeDeclaration declaration = new MyLQNQualityAttributeDeclaration();
+		MyLQNQualityAttributeDeclarationImrpoved declaration = new MyLQNQualityAttributeDeclarationImrpoved();
 		CriteriaInitializer criteriaInitializer = new CriteriaInitializer(pcmInstance, declaration);
 		criteriaInitializer.initializeCriteria(dseConfiguration);
 		List<Criterion> criterions = criteriaInitializer.getCriterions();

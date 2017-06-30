@@ -28,8 +28,8 @@ import de.uka.ipd.sdq.dsexplore.qml.pcm.datastructures.builder.UsageScenarioBase
 import de.uka.ipd.sdq.dsexplore.qml.pcm.datastructures.builder.UsageScenarioBasedSatisfactionConstraintBuilder;
 import de.uka.ipd.sdq.dsexplore.qml.profile.QMLProfile.EntryLevelSystemCallRequirement;
 import de.uka.ipd.sdq.dsexplore.qml.profile.QMLProfile.UsageScenarioRequirement;
-import io.github.squat_team.performance.peropteryx.overwrite.reader.MyPCMDeclarationsReader;
-import io.github.squat_team.performance.peropteryx.overwrite.reader.MyPCMDeclarationsReaderFiller;
+import io.github.squat_team.performance.peropteryx.overwrite.reader.MyPCMDeclarationsReaderImrpoved;
+import io.github.squat_team.performance.peropteryx.overwrite.reader.MyPCMDeclarationsReaderFillerImrpoved;
 
 /**
  * This class rebuilds criterias for the extraction of LQN solver results.
@@ -50,7 +50,7 @@ public class CriteriaInitializer {
 		List<UsageScenario> scenarios = pcmInstance.getUsageModel().getUsageScenario_UsageModel();
 		UsageModel usageModel = pcmInstance.getUsageModel();
 
-		MyPCMDeclarationsReader reader = new MyPCMDeclarationsReader(
+		MyPCMDeclarationsReaderImrpoved reader = new MyPCMDeclarationsReaderImrpoved(
 				configuration.getRawConfiguration().getAttribute("qmlDefinitionFile", ""));
 
 		List<Dimension> dimensions = this.qualityAttribute.getDimensions();
@@ -84,7 +84,7 @@ public class CriteriaInitializer {
 										usageScenario);
 								InfeasibilityConstraint c = reader
 										.translateEvalAspectToInfeasibilityConstraint(aspectContext, builder);
-								MyPCMDeclarationsReaderFiller
+								MyPCMDeclarationsReaderFillerImrpoved
 										.staticTranslateEvalAspectToInfeasibilityConstraint(aspectContext, builder); // TODO:
 																														// ADDED
 								criteriaList.add(c);
@@ -94,7 +94,7 @@ public class CriteriaInitializer {
 										usageScenario);
 								Objective o = reader.translateEvalAspectToObjective(
 										this.getQualityAttribute().getName(), aspectContext, objectiveBuilder);
-								MyPCMDeclarationsReaderFiller.staticTranslateEvalAspectToObjective(
+								MyPCMDeclarationsReaderFillerImrpoved.staticTranslateEvalAspectToObjective(
 										this.getQualityAttribute().getName(), aspectContext, objectiveBuilder); // TODO:
 																												// ADDED
 								criteriaList.add(o);
@@ -103,7 +103,7 @@ public class CriteriaInitializer {
 										usageScenario);
 								SatisfactionConstraint c = reader
 										.translateEvalAspectToSatisfactionConstraint(aspectContext, o, builder);
-								MyPCMDeclarationsReaderFiller
+								MyPCMDeclarationsReaderFillerImrpoved
 										.staticTranslateEvalAspectToSatisfactionConstraint(aspectContext, o, builder);// TODO:
 																														// ADDED
 								criteriaList.add(c);
@@ -117,7 +117,7 @@ public class CriteriaInitializer {
 
 							InfeasibilityConstraint c = reader
 									.translateEvalAspectToInfeasibilityConstraint(aspectContext, builder);
-							MyPCMDeclarationsReaderFiller
+							MyPCMDeclarationsReaderFillerImrpoved
 									.staticTranslateEvalAspectToInfeasibilityConstraint(aspectContext, builder); // TODO:
 																													// ADDED
 							criteriaList.add(c);
@@ -127,7 +127,7 @@ public class CriteriaInitializer {
 									((UsageScenarioRequirement) aspectContext.getRequirement()).getUsageScenario());
 							Objective o = reader.translateEvalAspectToObjective(this.getQualityAttribute().getName(),
 									aspectContext, objectiveBuilder);
-							MyPCMDeclarationsReaderFiller.staticTranslateEvalAspectToObjective(
+							MyPCMDeclarationsReaderFillerImrpoved.staticTranslateEvalAspectToObjective(
 									this.getQualityAttribute().getName(), aspectContext, objectiveBuilder); // TODO:
 																											// ADDED
 							criteriaList.add(o);
@@ -137,7 +137,7 @@ public class CriteriaInitializer {
 
 							SatisfactionConstraint c = reader.translateEvalAspectToSatisfactionConstraint(aspectContext,
 									o, builder);
-							MyPCMDeclarationsReaderFiller
+							MyPCMDeclarationsReaderFillerImrpoved
 									.staticTranslateEvalAspectToSatisfactionConstraint(aspectContext, o, builder); // TODO:
 																													// ADDED
 							criteriaList.add(c);
@@ -152,7 +152,7 @@ public class CriteriaInitializer {
 										.getEntryLevelSystemCall());
 						InfeasibilityConstraint c = reader.translateEvalAspectToInfeasibilityConstraint(aspectContext,
 								builder);
-						MyPCMDeclarationsReaderFiller.staticTranslateEvalAspectToInfeasibilityConstraint(aspectContext,
+						MyPCMDeclarationsReaderFillerImrpoved.staticTranslateEvalAspectToInfeasibilityConstraint(aspectContext,
 								builder); // TODO: ADDED
 						criteriaList.add(c);
 					} else {
@@ -164,7 +164,7 @@ public class CriteriaInitializer {
 
 						Objective o = reader.translateEvalAspectToObjective(this.getQualityAttribute().getName(),
 								aspectContext, builder);
-						MyPCMDeclarationsReaderFiller.staticTranslateEvalAspectToObjective(
+						MyPCMDeclarationsReaderFillerImrpoved.staticTranslateEvalAspectToObjective(
 								this.getQualityAttribute().getName(), aspectContext, builder); // TODO:
 																								// ADDED
 						criteriaList.add(o);
@@ -173,7 +173,7 @@ public class CriteriaInitializer {
 								entryLevelSystemCall);
 						SatisfactionConstraint c = reader.translateEvalAspectToSatisfactionConstraint(aspectContext, o,
 								satisBuilder);
-						MyPCMDeclarationsReaderFiller.staticTranslateEvalAspectToSatisfactionConstraint(aspectContext,
+						MyPCMDeclarationsReaderFillerImrpoved.staticTranslateEvalAspectToSatisfactionConstraint(aspectContext,
 								o, satisBuilder);// TODO: ADDED
 						criteriaList.add(c);
 					}

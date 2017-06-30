@@ -6,11 +6,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
@@ -44,7 +39,7 @@
 	<classpathentry kind="lib" path="lib/peropteryx/de.uka.ipd.sdq.codegen.simucontroller_1.0.1.201609071548.jar"/>
 	<classpathentry kind="lib" path="lib/peropteryx/de.uka.ipd.sdq.codegen.simudatavisualisation.datatypes_2.0.0.201607261439.jar"/>
 	<classpathentry kind="lib" path="lib/peropteryx/de.uka.ipd.sdq.dialogs_2.0.1.201608251324.jar"/>
-	<classpathentry kind="lib" path="lib/peropteryx/de.uka.ipd.sdq.dsexplore_1.3.0.201609081412.jar"/>
+	<classpathentry kind="lib" path="lib/peropteryx/de.uka.ipd.sdq.dsexplore_1.3.0.201609081412.jar" sourcepath="lib/peropteryx/de.uka.ipd.sdq.dsexplore.source_1.3.0.201609081412.jar"/>
 	<classpathentry kind="lib" path="lib/peropteryx/de.uka.ipd.sdq.dsexplore.analysis.cost_1.0.0.201609081413.jar"/>
 	<classpathentry kind="lib" path="lib/peropteryx/de.uka.ipd.sdq.dsexplore.analysis.lqn_1.0.0.201609081413.jar"/>
 	<classpathentry kind="lib" path="lib/peropteryx/de.uka.ipd.sdq.dsexplore.analysis.reliability_1.0.0.201609081412.jar"/>
@@ -417,7 +412,6 @@
 	<classpathentry kind="lib" path="lib/peropteryx/org.palladiosimulator.simulizar.ui_2.0.0.201606021010.jar"/>
 	<classpathentry kind="lib" path="lib/peropteryx/org.palladiosimulator.simulizar.ui.perspective_1.0.0.201606021010.jar"/>
 	<classpathentry kind="lib" path="lib/peropteryx/org.palladiosimulator.simulizar.ui.wizards_1.0.0.201606021010.jar"/>
-	<classpathentry kind="lib" path="lib/peropteryx/org.palladiosimulator.solver_3.0.0.201608171304.jar"/>
 	<classpathentry kind="lib" path="lib/peropteryx/org.palladiosimulator.solver.context_2.0.0.201608171304.jar"/>
 	<classpathentry kind="lib" path="lib/peropteryx/org.palladiosimulator.solver.context.edit_2.0.0.201608171304.jar"/>
 	<classpathentry kind="lib" path="lib/peropteryx/org.palladiosimulator.solver.context.editor_2.0.0.201608171304.jar"/>
@@ -428,5 +422,6 @@
 	<classpathentry kind="lib" path="lib/peropteryx/org.palladiosimulator.solver.spa_1.0.0.201608171304.jar"/>
 	<classpathentry kind="lib" path="lib/peropteryx/org.palladiosimulator.solver.spa.basicsolver_1.0.0.201608171304.jar"/>
 	<classpathentry kind="lib" path="lib/peropteryx/org.palladiosimulator.solver.spa.resourcemodel_1.0.0.201608171304.jar"/>
+	<classpathentry kind="lib" path="lib/peropteryx/org.palladiosimulator.solver_3.0.0.201608171304.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

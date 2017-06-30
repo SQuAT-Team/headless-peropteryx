@@ -6,12 +6,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
-		<attributes>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
@@ -27,10 +21,9 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/hpo.jar"/>
-	<classpathentry kind="lib" path="lib/fastpan-v0.2.1.jar"/>
-	<classpathentry kind="lib" path="lib/palladio-analysis-0.6.3-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="lib/palladio-builder-0.6.3-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="lib/palladio-environment-0.6.3-SNAPSHOT-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="lib/hpo.jar" sourcepath="/Headless-PerOpteryx-src/src/main/java"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Headless-PerOpteryx-src"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Palladio-headless"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/fastpan"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

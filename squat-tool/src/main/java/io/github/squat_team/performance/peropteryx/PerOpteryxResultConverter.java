@@ -13,33 +13,33 @@ import io.github.squat_team.model.PCMArchitectureInstance;
 import io.github.squat_team.model.PCMResult;
 import io.github.squat_team.model.PCMScenarioResult;
 import io.github.squat_team.model.ResponseMeasureType;
-import io.github.squat_team.performance.peropteryx.export.PerOpteryxPCMResult;
+import io.github.squat_team.performance.peropteryx.export.PerOpteryxPCMResultImrpoved;
 import io.github.squat_team.util.SQuATHelper;
 
 public class PerOpteryxResultConverter {
 
-	public static List<PCMScenarioResult> convert(List<PerOpteryxPCMResult> peropteryxResults, AbstractPCMBot bot) {
+	public static List<PCMScenarioResult> convert(List<PerOpteryxPCMResultImrpoved> peropteryxResults, AbstractPCMBot bot) {
 		List<PCMScenarioResult> results = new ArrayList<PCMScenarioResult>();
-		for (PerOpteryxPCMResult peropteryxResult : peropteryxResults) {
+		for (PerOpteryxPCMResultImrpoved peropteryxResult : peropteryxResults) {
 			results.add(convert(peropteryxResult, bot));
 		}
 		return results;
 	}
 
-	public static PCMScenarioResult convert(PerOpteryxPCMResult peropteryxResult, AbstractPCMBot bot) {
+	public static PCMScenarioResult convert(PerOpteryxPCMResultImrpoved peropteryxResult, AbstractPCMBot bot) {
 		PCMScenarioResult scenarioResult = new PCMScenarioResult(bot);
 		scenarioResult.setResult(createPCMResult(peropteryxResult));
 		scenarioResult.setResultingArchitecture(createArchitectureInstance(peropteryxResult));
 		return scenarioResult;
 	}
 
-	private static PCMResult createPCMResult(PerOpteryxPCMResult peropteryxResult) {
+	private static PCMResult createPCMResult(PerOpteryxPCMResultImrpoved peropteryxResult) {
 		PCMResult pcmResult = new PCMResult(ResponseMeasureType.DECIMAL);
 		pcmResult.setResponse(peropteryxResult.getValue());
 		return pcmResult;
 	}
 
-	private static PCMArchitectureInstance createArchitectureInstance(PerOpteryxPCMResult peropteryxResult) {
+	private static PCMArchitectureInstance createArchitectureInstance(PerOpteryxPCMResultImrpoved peropteryxResult) {
 		Allocation allocation = SQuATHelper.loadAllocationModel(formatePath(peropteryxResult.getAllocationPath()));
 		Repository repository = SQuATHelper.loadRepositoryModel(formatePath(peropteryxResult.getRepositoryPath()));
 		org.palladiosimulator.pcm.system.System system = SQuATHelper.loadSystemModel(formatePath(peropteryxResult.getSystemPath()));

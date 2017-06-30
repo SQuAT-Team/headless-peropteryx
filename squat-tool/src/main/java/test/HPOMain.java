@@ -6,19 +6,19 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import io.github.squat_team.performance.peropteryx.configuration.Configuration;
-import io.github.squat_team.performance.peropteryx.configuration.PerOpteryxConfig;
-import io.github.squat_team.performance.peropteryx.export.ExportMode;
-import io.github.squat_team.performance.peropteryx.export.OptimizationDirection;
-import io.github.squat_team.performance.peropteryx.export.PerOpteryxPCMResult;
-import io.github.squat_team.performance.peropteryx.start.HeadlessPerOpteryxRunner;
+import io.github.squat_team.performance.peropteryx.configuration.ConfigurationImprovedImproved;
+import io.github.squat_team.performance.peropteryx.configuration.PerOpteryxConfigImproved;
+import io.github.squat_team.performance.peropteryx.export.ExportModeImrpoved;
+import io.github.squat_team.performance.peropteryx.export.OptimizationDirectionImrpoved;
+import io.github.squat_team.performance.peropteryx.export.PerOpteryxPCMResultImrpoved;
+import io.github.squat_team.performance.peropteryx.start.MyHeadlessPerOpteryxRunnerImrpoved;
 
 /**
  * Main class to run Headless PerOpteryx
  */
 public class HPOMain {
 	
-	private static Configuration config;
+	private static ConfigurationImprovedImproved config;
 	
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		configurate();
@@ -26,7 +26,7 @@ public class HPOMain {
 	}
 
 	private static void configurate(){
-		config = new Configuration();
+		config = new ConfigurationImprovedImproved();
 		config.getPerOpteryxConfig().setMaxIterations(1);
 		config.getPerOpteryxConfig().setGenerationSize(1);
 		
@@ -34,15 +34,15 @@ public class HPOMain {
 		config.getPcmInstanceConfig().setUsageModel(TestConstants.USAGE_FILE_PATH);
 		config.getPerOpteryxConfig().setDesignDecisionFile(TestConstants.DESIGNDECISION_FILE_PATH);
 		config.getPerOpteryxConfig().setQmlDefinitionFile(TestConstants.QML_FILE_PATH);
-		config.getPerOpteryxConfig().setMode(PerOpteryxConfig.Mode.OPTIMIZE);
+		config.getPerOpteryxConfig().setMode(PerOpteryxConfigImproved.Mode.OPTIMIZE);
 		
 		config.getPcmModelsConfig().setPathmapFolder(TestConstants.PCM_MODEL_FILES);
 		
 		config.getLqnsConfig().setLqnsOutputDir(TestConstants.LQN_OUTPUT);
 		config.getExporterConfig().setPcmOutputFolder(TestConstants.PCM_STORAGE_PATH);
-		config.getExporterConfig().setExportMode(ExportMode.AMOUNT);
+		config.getExporterConfig().setExportMode(ExportModeImrpoved.AMOUNT);
 		config.getExporterConfig().setAmount(2);
-		config.getExporterConfig().setOptimizationDirection(OptimizationDirection.MINIMIZE);
+		config.getExporterConfig().setOptimizationDirection(OptimizationDirectionImrpoved.MINIMIZE);
 		config.getExporterConfig().setBoundaryValue(6.0);
 	}
 	
@@ -50,10 +50,10 @@ public class HPOMain {
 	    ExecutorService pool = Executors.newFixedThreadPool(4);
 		
 	    long start = System.currentTimeMillis();
-		HeadlessPerOpteryxRunner runner = new HeadlessPerOpteryxRunner();
+		MyHeadlessPerOpteryxRunnerImrpoved runner = new MyHeadlessPerOpteryxRunnerImrpoved();
 		runner.init(config);
 		runner.setDebugMode(false);
-	    Future<List<PerOpteryxPCMResult>> future = pool.submit(runner);
+	    Future<List<PerOpteryxPCMResultImrpoved>> future = pool.submit(runner);
 	    future.get();
 	    long end = System.currentTimeMillis();
 	    System.out.println("TIME: " + (end-start));

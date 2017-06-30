@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ASCII"?>
+<designdecision:DecisionSpace xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:designdecision="http://sdq.ipd.uka.de/DesignDecision/3.0" xmlns:specific="http://sdq.ipd.uka.de/DesignDecision/Specific/3.0" id="_tMW3gFyyEeevzo-Me6N6lw">
+  <degreesOfFreedom xsi:type="specific:ContinuousProcessingRateDegree" lowerBoundIncluded="false" to="9.0" from="2.25">
+    <primaryChanged href="bot_workingcopy.resourceenvironment#_g7HJEC6MEd-Jla2o7wkBzQ"/>
+    <processingresourcetype href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+  </degreesOfFreedom>
+  <degreesOfFreedom xsi:type="specific:ContinuousProcessingRateDegree" lowerBoundIncluded="false" to="2000.0" from="500.0">
+    <primaryChanged href="bot_workingcopy.resourceenvironment#_g7HJEC6MEd-Jla2o7wkBzQ"/>
+    <processingresourcetype href="pathmap://PCM_MODELS/Palladio.resourcetype#_BIjHoQ3KEdyouMqirZIhzQ"/>
+  </degreesOfFreedom>
+  <degreesOfFreedom xsi:type="specific:ContinuousProcessingRateDegree" lowerBoundIncluded="false" to="6.0" from="1.5">
+    <primaryChanged href="bot_workingcopy.resourceenvironment#_h3wXgC6MEd-Jla2o7wkBzQ"/>
+    <processingresourcetype href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+  </degreesOfFreedom>
+  <degreesOfFreedom xsi:type="specific:ContinuousProcessingRateDegree" lowerBoundIncluded="false" to="2000.0" from="500.0">
+    <primaryChanged href="bot_workingcopy.resourceenvironment#_h3wXgC6MEd-Jla2o7wkBzQ"/>
+    <processingresourcetype href="pathmap://PCM_MODELS/Palladio.resourcetype#_BIjHoQ3KEdyouMqirZIhzQ"/>
+  </degreesOfFreedom>
+  <degreesOfFreedom xsi:type="specific:ContinuousProcessingRateDegree" lowerBoundIncluded="false" to="6.0" from="1.5">
+    <primaryChanged href="bot_workingcopy.resourceenvironment#_vxqJwS6QEd-pNfzbJsur0g"/>
+    <processingresourcetype href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+  </degreesOfFreedom>
+  <degreesOfFreedom xsi:type="specific:ContinuousProcessingRateDegree" lowerBoundIncluded="false" to="2000.0" from="500.0">
+    <primaryChanged href="bot_workingcopy.resourceenvironment#_vxqJwS6QEd-pNfzbJsur0g"/>
+    <processingresourcetype href="pathmap://PCM_MODELS/Palladio.resourcetype#_BIjHoQ3KEdyouMqirZIhzQ"/>
+  </degreesOfFreedom>
+  <degreesOfFreedom xsi:type="specific:ContinuousProcessingRateDegree" lowerBoundIncluded="false" to="10.0" from="2.5">
+    <primaryChanged href="bot_workingcopy.resourceenvironment#_7jiyMV5LEeavvL8WcdoZSg"/>
+    <processingresourcetype href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+  </degreesOfFreedom>
+  <degreesOfFreedom xsi:type="specific:ContinuousProcessingRateDegree" lowerBoundIncluded="false" to="2000000.0" from="500000.0">
+    <primaryChanged href="bot_workingcopy.resourceenvironment#_7jiyMV5LEeavvL8WcdoZSg"/>
+    <processingresourcetype href="pathmap://PCM_MODELS/Palladio.resourcetype#_BIjHoQ3KEdyouMqirZIhzQ"/>
+  </degreesOfFreedom>
+  <degreesOfFreedom xsi:type="specific:AllocationDegree">
+    <primaryChanged href="bot_workingcopy.allocation#_wTSXgC6NEd-Jla2o7wkBzQ"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_g7HJEC6MEd-Jla2o7wkBzQ"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_h3wXgC6MEd-Jla2o7wkBzQ"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_vxqJwS6QEd-pNfzbJsur0g"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_7jiyMV5LEeavvL8WcdoZSg"/>
+  </degreesOfFreedom>
+  <degreesOfFreedom xsi:type="specific:AllocationDegree">
+    <primaryChanged href="bot_workingcopy.allocation#_wqjA8C6NEd-Jla2o7wkBzQ"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_g7HJEC6MEd-Jla2o7wkBzQ"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_h3wXgC6MEd-Jla2o7wkBzQ"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_vxqJwS6QEd-pNfzbJsur0g"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_7jiyMV5LEeavvL8WcdoZSg"/>
+  </degreesOfFreedom>
+  <degreesOfFreedom xsi:type="specific:AllocationDegree">
+    <primaryChanged href="bot_workingcopy.allocation#_xECfAC6NEd-Jla2o7wkBzQ"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_g7HJEC6MEd-Jla2o7wkBzQ"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_h3wXgC6MEd-Jla2o7wkBzQ"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_vxqJwS6QEd-pNfzbJsur0g"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_7jiyMV5LEeavvL8WcdoZSg"/>
+  </degreesOfFreedom>
+  <degreesOfFreedom xsi:type="specific:AllocationDegree">
+    <primaryChanged href="bot_workingcopy.allocation#_Sl0FoF7pEeavvL8WcdoZSg"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_g7HJEC6MEd-Jla2o7wkBzQ"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_h3wXgC6MEd-Jla2o7wkBzQ"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_vxqJwS6QEd-pNfzbJsur0g"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_7jiyMV5LEeavvL8WcdoZSg"/>
+  </degreesOfFreedom>
+  <degreesOfFreedom xsi:type="specific:AllocationDegree">
+    <primaryChanged href="bot_workingcopy.allocation#_xu8AMGCeEeaZ6qtnAD5gLQ"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_g7HJEC6MEd-Jla2o7wkBzQ"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_h3wXgC6MEd-Jla2o7wkBzQ"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_vxqJwS6QEd-pNfzbJsur0g"/>
+    <classDesignOptions href="bot_workingcopy.resourceenvironment#_7jiyMV5LEeavvL8WcdoZSg"/>
+  </degreesOfFreedom>
+  <degreesOfFreedom xsi:type="specific:CapacityDegree" to="1" from="1">
+    <primaryChanged href="bot_workingcopy.repository#__hz0ANrPEd-YZv0HsvRIgQ"/>
+  </degreesOfFreedom>
+</designdecision:DecisionSpace>

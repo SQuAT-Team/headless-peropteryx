@@ -28,13 +28,13 @@ import io.github.squat_team.performance.lqns.LQNSResultConverter;
 import io.github.squat_team.performance.lqns.LQNSResultExtractor;
 import io.github.squat_team.performance.lqns.LQNSDetailedResultWriter;
 import io.github.squat_team.performance.lqns.LQNSResult;
-import io.github.squat_team.performance.peropteryx.configuration.Configuration;
-import io.github.squat_team.performance.peropteryx.configuration.PerOpteryxConfig.Mode;
-import io.github.squat_team.performance.peropteryx.environment.PalladioEclipseEnvironment;
-import io.github.squat_team.performance.peropteryx.export.ExportMode;
-import io.github.squat_team.performance.peropteryx.export.OptimizationDirection;
-import io.github.squat_team.performance.peropteryx.export.PerOpteryxPCMResult;
-import io.github.squat_team.performance.peropteryx.start.HeadlessPerOpteryxRunner;
+import io.github.squat_team.performance.peropteryx.configuration.ConfigurationImprovedImproved;
+import io.github.squat_team.performance.peropteryx.configuration.PerOpteryxConfigImproved.Mode;
+import io.github.squat_team.performance.peropteryx.environment.PalladioEclipseEnvironmentImrpoved;
+import io.github.squat_team.performance.peropteryx.export.ExportModeImrpoved;
+import io.github.squat_team.performance.peropteryx.export.OptimizationDirectionImrpoved;
+import io.github.squat_team.performance.peropteryx.export.PerOpteryxPCMResultImrpoved;
+import io.github.squat_team.performance.peropteryx.start.MyHeadlessPerOpteryxRunnerImrpoved;
 import io.github.squat_team.util.PCMRepositoryModifier;
 import io.github.squat_team.util.PCMWorkingCopyCreator;
 import io.github.squat_team.util.SQuATHelper;
@@ -42,7 +42,7 @@ import io.github.squat_team.util.SQuATHelper;
 public class PerOpteryxPCMBot extends AbstractPCMBot {
 	private static Logger logger = Logger.getLogger(PerOpteryxPCMBot.class.getName());
 	private Level loglevel;
-	private Configuration configuration;
+	private ConfigurationImprovedImproved configuration;
 	private AbstractPerformancePCMScenario performanceScenario;
 	private Boolean debugMode = false;
 	private Boolean detailedAnalysis = false;
@@ -61,7 +61,7 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 	 *            generated automatically, if no path is given. Some values will
 	 *            be added or overwritten later.
 	 */
-	public PerOpteryxPCMBot(AbstractPerformancePCMScenario scenario, Configuration configuration) {
+	public PerOpteryxPCMBot(AbstractPerformancePCMScenario scenario, ConfigurationImprovedImproved configuration) {
 		super(scenario);
 		this.configuration = configuration;
 		this.performanceScenario = scenario;
@@ -143,7 +143,7 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 			configureExportForOptimization();
 			configurePerOpteryxForOptimization();
 			validateConfiguration();
-			Future<List<PerOpteryxPCMResult>> future = runPerOpteryx();
+			Future<List<PerOpteryxPCMResultImrpoved>> future = runPerOpteryx();
 			List<PCMScenarioResult> results = exportOptimizationResults(future);
 			if (detailedAnalysis) {
 				analyzeDetailed(results);
@@ -171,7 +171,7 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 	}
 
 	private void setupEnvironmentforAnalysis() {
-		PalladioEclipseEnvironment.INSTANCE.setup(configuration.getPcmModelsConfig().getPathmapFolder());
+		PalladioEclipseEnvironmentImrpoved.INSTANCE.setup(configuration.getPcmModelsConfig().getPathmapFolder());
 		de.fakeller.palladio.environment.PalladioEclipseEnvironment.INSTANCE.setup();
 	}
 
@@ -205,9 +205,9 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 		}
 	}
 
-	private List<PCMScenarioResult> exportOptimizationResults(Future<List<PerOpteryxPCMResult>> future) {
+	private List<PCMScenarioResult> exportOptimizationResults(Future<List<PerOpteryxPCMResultImrpoved>> future) {
 		try {
-			List<PerOpteryxPCMResult> peropteryxResult = future.get();
+			List<PerOpteryxPCMResultImrpoved> peropteryxResult = future.get();
 			return PerOpteryxResultConverter.convert(peropteryxResult, this);
 		} catch (InterruptedException e) {
 			logger.error(e.getMessage(), e);
@@ -218,8 +218,8 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 		}
 	}
 
-	private Future<List<PerOpteryxPCMResult>> runPerOpteryx() {
-		HeadlessPerOpteryxRunner runner = new HeadlessPerOpteryxRunner();
+	private Future<List<PerOpteryxPCMResultImrpoved>> runPerOpteryx() {
+		MyHeadlessPerOpteryxRunnerImrpoved runner = new MyHeadlessPerOpteryxRunnerImrpoved();
 		runner.init(configuration);
 		runner.setDebugMode(this.debugMode);
 		return ThreadPoolProvider.POOL.submit(runner);
@@ -254,14 +254,14 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 		// TODO: which results should be exported? all/better than expected/x
 		// best/only the best?
 		configuration.getExporterConfig().setAmount(10);
-		configuration.getExporterConfig().setExportMode(ExportMode.AMOUNT);
+		configuration.getExporterConfig().setExportMode(ExportModeImrpoved.AMOUNT);
 	}
 
 	private void configureWith(PCMArchitectureInstance currentArchitecture) {
 		String allocationPath = currentArchitecture.getAllocation().eResource().getURI().toString();
 		String usagemodelPath = currentArchitecture.getUsageModel().eResource().getURI().toString();
-		allocationPath = allocationPath.replaceAll("file:/", "");
-		usagemodelPath = usagemodelPath.replaceAll("file:/", "");
+		allocationPath = allocationPath.replaceAll("file:", "");
+		usagemodelPath = usagemodelPath.replaceAll("file:", "");
 		configuration.getPcmInstanceConfig().setAllocationModel(allocationPath);
 		configuration.getPcmInstanceConfig().setUsageModel(usagemodelPath);
 	}
@@ -279,9 +279,9 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 
 	private void configureOptimizationDirection(OptimizationType type) {
 		if (type == OptimizationType.MINIMIZATION) {
-			configuration.getExporterConfig().setOptimizationDirection(OptimizationDirection.MINIMIZE);
+			configuration.getExporterConfig().setOptimizationDirection(OptimizationDirectionImrpoved.MINIMIZE);
 		} else if (type == OptimizationType.MAXIMIZATION) {
-			configuration.getExporterConfig().setOptimizationDirection(OptimizationDirection.MAXIMIZE);
+			configuration.getExporterConfig().setOptimizationDirection(OptimizationDirectionImrpoved.MAXIMIZE);
 		}
 	}
 

@@ -31,8 +31,8 @@ import io.github.squat_team.performance.PerformancePCMCPUScenario;
 import io.github.squat_team.performance.PerformancePCMWokloadScenario;
 import io.github.squat_team.performance.AbstractPerformancePCMScenario;
 import io.github.squat_team.performance.peropteryx.PerOpteryxPCMBot;
-import io.github.squat_team.performance.peropteryx.configuration.Configuration;
-import io.github.squat_team.performance.peropteryx.start.OptimizationInfo;
+import io.github.squat_team.performance.peropteryx.configuration.ConfigurationImprovedImproved;
+import io.github.squat_team.performance.peropteryx.start.OptimizationInfoImrpoved;
 import io.github.squat_team.util.SQuATHelper;
 import test.TestConstants;
 
@@ -56,7 +56,7 @@ public class SQuATMain {
 
 		// create scenario
 		ArrayList<String> workloadIDs = new ArrayList<String>();
-		workloadIDs.add(TestConstants.WORKLOAD_ID);
+		//workloadIDs.add(TestConstants.WORKLOAD_ID);
 		
 		ArrayList<String> cpuIDs = new ArrayList<String>();
 		cpuIDs.add(TestConstants.CPU_ID);
@@ -70,7 +70,7 @@ public class SQuATMain {
 		scenario.setMetric(PerformanceMetric.RESPONSE_TIME);
 
 		// create configuration
-		Configuration configuration = new Configuration();
+		ConfigurationImprovedImproved configuration = new ConfigurationImprovedImproved();
 		// configuration.getPerOpteryxConfig().setDesignDecisionFile(TestConstants.DESIGNDECISION_FILE_PATH);
 		// configuration.getPerOpteryxConfig().setQmlDefinitionFile(TestConstants.QML_FILE_PATH);
 		configuration.getPerOpteryxConfig().setGenerationSize(100);
@@ -82,7 +82,7 @@ public class SQuATMain {
 
 		// init bot
 		PerOpteryxPCMBot bot = new PerOpteryxPCMBot(scenario, configuration);
-		bot.setDebugMode(false);
+		bot.setDebugMode(true);
 		bot.setDetailedAnalysis(true);
 
 		List<String> basicPaths = new ArrayList<String>();
@@ -134,14 +134,14 @@ public class SQuATMain {
 			PCMArchitectureInstance architecture = new PCMArchitectureInstance("", repository, system, allocation,
 					resourceenvironment, usageModel);
 			// TODO: should not be used in multiOptimization
-			architecture.setRepositoryWithAlternatives(SQuATHelper.loadRepositoryModel("file:/" + TestConstants.ALTERNATIVE_REPOSITORY_PATH));
+		//	architecture.setRepositoryWithAlternatives(SQuATHelper.loadRepositoryModel("file:/" + TestConstants.ALTERNATIVE_REPOSITORY_PATH));
 
 			// configuration.getPerOpteryxConfig().setMaxIterations(1);
 			// configuration.getPerOpteryxConfig().setGenerationSize(1);
 
 			// TODO:
-			//optimize(bot, architecture, basicPath, configuration);
-			analyze(bot, architecture, basicPath);
+			optimize(bot, architecture, basicPath, configuration);
+			//analyze(bot, architecture, basicPath);
 
 		}
 		// AUTOMATIC EVALUATION - cant be used
@@ -228,7 +228,7 @@ public class SQuATMain {
 	}
 
 	public static void optimize(PerOpteryxPCMBot bot, PCMArchitectureInstance architecture, String basicPath,
-			Configuration configuration) throws IOException {
+			ConfigurationImprovedImproved configuration) throws IOException {
 		// run bot optimization
 		long start = System.currentTimeMillis();
 		List<PCMScenarioResult> results = bot.searchForAlternatives(architecture);
@@ -257,8 +257,8 @@ public class SQuATMain {
 		System.out.println("Runtime " + (end - start) + " ms");
 		w.write("Runtime " + (end - start) + " ms");
 		w.newLine();
-		System.out.println("Real Iterations: " + OptimizationInfo.getIterations());
-		w.write("Real Iterations: " + OptimizationInfo.getIterations());
+		System.out.println("Real Iterations: " + OptimizationInfoImrpoved.getIterations());
+		w.write("Real Iterations: " + OptimizationInfoImrpoved.getIterations());
 		w.newLine();
 		System.out.println("");
 		w.write("");

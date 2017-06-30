@@ -67,6 +67,7 @@ public class PerOpteryxQMLConverter {
 	}
 
 	private static String searchForUsageModelID(String usageModelPath) throws IOException {
+		  
 		List<String> lines = Files.readAllLines(Paths.get(usageModelPath), StandardCharsets.UTF_8);
 		for (String line : lines) {
 			if (line.contains("usageScenario_UsageModel")) {
