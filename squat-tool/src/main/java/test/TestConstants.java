@@ -25,5 +25,5 @@ public class TestConstants {
 	public static final String PCM_MODEL_FILES = "file://Users/santiagovidal/git/headless-peropteryx/squat-tool/palladioDeinitions/";
 
 	public static final String WORKLOAD_ID = "_Uc-igC6OEd-Jla2o7wkBzQ";
-	public static final String CPU_ID = "thisIsTheCPUID"; 
+	public static final String CPU_ID = "_GecPsF7fEeavvL8WcdoZSg"; 
 }
