@@ -1,0 +1,5 @@
+Created by Headless PerOpteryx
+Numeric ID:
+462
+Genotype ID:
+5.503012446087773;908.1599351656046;3.8354492907610984;1762.484778446582;5.9110145611412515;1062.9856256368214;6.736499161126443;865094.0084610858;FastReadTripDB (ID: B_letEAF41EeavvL8WcdoZSg);Exporter (ID: _QWlc0F_MEeahZew5WJ0QOQ);BookingSystem (ID: _ZZH7IC6IEd-Jla2o7wkBzQ);Server2 (ID: _h3wXgC6MEd-Jla2o7wkBzQ);Server3 (ID: _vxqJwS6QEd-pNfzbJsur0g);DBServer (ID: _7jiyMV5LEeavvL8WcdoZSg);Server3 (ID: _vxqJwS6QEd-pNfzbJsur0g);Server3 (ID: _vxqJwS6QEd-pNfzbJsur0g);1;

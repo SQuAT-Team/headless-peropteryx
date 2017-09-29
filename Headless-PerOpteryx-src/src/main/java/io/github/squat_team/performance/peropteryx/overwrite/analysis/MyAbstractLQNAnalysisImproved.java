@@ -65,7 +65,7 @@ public abstract class MyAbstractLQNAnalysisImproved extends MyAbstractAnalysisIm
 	 */
 	public void analyse(PCMPhenotype pheno, IProgressMonitor monitor)
 			throws AnalysisFailedException, CoreException, UserCanceledException {
-		System.out.println("Hola");
+		//System.out.println("Hola");
 		ILaunchConfigurationWorkingCopy wcopy = this.config.getWorkingCopy();
 		wcopy.setAttribute(MessageStrings.SOLVER, this.getSolverMessageString());
 		this.config = wcopy.doSave();

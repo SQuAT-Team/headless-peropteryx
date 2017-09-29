@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ASCII"?>
+<resourceenvironment:ResourceEnvironment xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:resourceenvironment="http://palladiosimulator.org/PalladioComponentModel/ResourceEnvironment/5.1">
+  <linkingResources__ResourceEnvironment id="_nTuUoK63Ed-35MKFzRJ9sw" connectedResourceContainers_LinkingResource="_g7HJEC6MEd-Jla2o7wkBzQ _h3wXgC6MEd-Jla2o7wkBzQ _vxqJwS6QEd-pNfzbJsur0g _7jiyMV5LEeavvL8WcdoZSg">
+    <communicationLinkResourceSpecifications_LinkingResource id="_ou_YwK63Ed-35MKFzRJ9sw" failureProbability="2.0E-4">
+      <communicationLinkResourceType_CommunicationLinkResourceSpecification href="pathmap://PCM_MODELS/Palladio.resourcetype#_o3sScH2AEdyH8uerKnHYug"/>
+      <latency_CommunicationLinkResourceSpecification specification="0.015"/>
+      <throughput_CommunicationLinkResourceSpecification specification="2000000000"/>
+    </communicationLinkResourceSpecifications_LinkingResource>
+  </linkingResources__ResourceEnvironment>
+  <resourceContainer_ResourceEnvironment id="_g7HJEC6MEd-Jla2o7wkBzQ" entityName="Server1">
+    <activeResourceSpecifications_ResourceContainer id="_psq4IiINEeSC6_3TPN1J7A" MTTR="6.0" MTTF="599539.5259766672">
+      <schedulingPolicy href="pathmap://PCM_MODELS/Palladio.resourcetype#ProcessorSharing"/>
+      <activeResourceType_ActiveResourceSpecification href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+      <processingRate_ProcessingResourceSpecification specification="8.993092889650008"/>
+    </activeResourceSpecifications_ResourceContainer>
+    <activeResourceSpecifications_ResourceContainer id="_xv4ggF7fEeavvL8WcdoZSg" MTTR="0.3" MTTF="1.2663546122114478E8">
+      <schedulingPolicy href="pathmap://PCM_MODELS/Palladio.resourcetype#FCFS"/>
+      <activeResourceType_ActiveResourceSpecification href="pathmap://PCM_MODELS/Palladio.resourcetype#_BIjHoQ3KEdyouMqirZIhzQ"/>
+      <processingRate_ProcessingResourceSpecification specification="1899.5319183171719"/>
+    </activeResourceSpecifications_ResourceContainer>
+  </resourceContainer_ResourceEnvironment>
+  <resourceContainer_ResourceEnvironment id="_h3wXgC6MEd-Jla2o7wkBzQ" entityName="Server2">
+    <activeResourceSpecifications_ResourceContainer id="_psq4JiINEeSC6_3TPN1J7A" MTTR="3.0" MTTF="395350.27954958635">
+      <schedulingPolicy href="pathmap://PCM_MODELS/Palladio.resourcetype#ProcessorSharing"/>
+      <activeResourceType_ActiveResourceSpecification href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+      <processingRate_ProcessingResourceSpecification specification="5.930254193243796"/>
+    </activeResourceSpecifications_ResourceContainer>
+    <activeResourceSpecifications_ResourceContainer id="_xv4ggF7fEeavvL8WcdoZSg1" MTTR="0.3" MTTF="8.131811063874991E7">
+      <schedulingPolicy href="pathmap://PCM_MODELS/Palladio.resourcetype#FCFS"/>
+      <activeResourceType_ActiveResourceSpecification href="pathmap://PCM_MODELS/Palladio.resourcetype#_BIjHoQ3KEdyouMqirZIhzQ"/>
+      <processingRate_ProcessingResourceSpecification specification="1219.7716595812487"/>
+    </activeResourceSpecifications_ResourceContainer>
+  </resourceContainer_ResourceEnvironment>
+  <resourceContainer_ResourceEnvironment id="_vxqJwS6QEd-pNfzbJsur0g" entityName="Server3">
+    <activeResourceSpecifications_ResourceContainer id="_psq4KiINEeSC6_3TPN1J7A" MTTR="4.0" MTTF="228189.939066787">
+      <schedulingPolicy href="pathmap://PCM_MODELS/Palladio.resourcetype#ProcessorSharing"/>
+      <activeResourceType_ActiveResourceSpecification href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+      <processingRate_ProcessingResourceSpecification specification="3.422849086001805"/>
+    </activeResourceSpecifications_ResourceContainer>
+    <activeResourceSpecifications_ResourceContainer id="_xv4ggF7fEeavvL8WcdoZSg2" MTTR="0.3" MTTF="1.223261439461178E8">
+      <schedulingPolicy href="pathmap://PCM_MODELS/Palladio.resourcetype#FCFS"/>
+      <activeResourceType_ActiveResourceSpecification href="pathmap://PCM_MODELS/Palladio.resourcetype#_BIjHoQ3KEdyouMqirZIhzQ"/>
+      <processingRate_ProcessingResourceSpecification specification="1834.892159191767"/>
+    </activeResourceSpecifications_ResourceContainer>
+  </resourceContainer_ResourceEnvironment>
+  <resourceContainer_ResourceEnvironment id="_7jiyMV5LEeavvL8WcdoZSg" entityName="DBServer">
+    <activeResourceSpecifications_ResourceContainer id="_GecPsF7fEeavvL8WcdoZSg" MTTR="6.0" MTTF="519585.4318850206">
+      <schedulingPolicy href="pathmap://PCM_MODELS/Palladio.resourcetype#ProcessorSharing"/>
+      <activeResourceType_ActiveResourceSpecification href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+      <processingRate_ProcessingResourceSpecification specification="7.793781478275308"/>
+    </activeResourceSpecifications_ResourceContainer>
+    <activeResourceSpecifications_ResourceContainer id="_xv4ggF7fEeavvL8WcdoZSg3" MTTR="0.3" MTTF="1.0612920614395929E11">
+      <schedulingPolicy href="pathmap://PCM_MODELS/Palladio.resourcetype#FCFS"/>
+      <activeResourceType_ActiveResourceSpecification href="pathmap://PCM_MODELS/Palladio.resourcetype#_BIjHoQ3KEdyouMqirZIhzQ"/>
+      <processingRate_ProcessingResourceSpecification specification="1591938.0921593893"/>
+    </activeResourceSpecifications_ResourceContainer>
+  </resourceContainer_ResourceEnvironment>
+</resourceenvironment:ResourceEnvironment>

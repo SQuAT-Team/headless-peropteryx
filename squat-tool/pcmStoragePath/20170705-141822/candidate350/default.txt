@@ -1,0 +1,5 @@
+Created by Headless PerOpteryx
+Numeric ID:
+1338
+Genotype ID:
+4.815418104498217;1714.869250387801;5.799064140949966;696.1932762258157;5.894709415070526;1719.68880232088;13.110762520805148;1463927.6296338155;FastWriteTripDB (ID: C_letEAF41EeavvL8WcdoZSg);AlternativeExporter (ID: _K9EFUHXDEeauMPtoFodBVw);BookingSystem (ID: _ZZH7IC6IEd-Jla2o7wkBzQ);Server3 (ID: _vxqJwS6QEd-pNfzbJsur0g);DBServer (ID: _7jiyMV5LEeavvL8WcdoZSg);DBServer (ID: _7jiyMV5LEeavvL8WcdoZSg);DBServer (ID: _7jiyMV5LEeavvL8WcdoZSg);DBServer (ID: _7jiyMV5LEeavvL8WcdoZSg);1;

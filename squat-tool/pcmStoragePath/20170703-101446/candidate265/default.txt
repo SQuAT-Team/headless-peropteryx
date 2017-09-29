@@ -1,0 +1,5 @@
+Created by Headless PerOpteryx
+Numeric ID:
+2614
+Genotype ID:
+5.9661998451511336;1857.805243687506;1.7289511431044398;1784.0248004531927;6.0;1414.608123966948;8.469561226039783;1087505.8230921559;Server3 (ID: _vxqJwS6QEd-pNfzbJsur0g);Server3 (ID: _vxqJwS6QEd-pNfzbJsur0g);Server3 (ID: _vxqJwS6QEd-pNfzbJsur0g);Server3 (ID: _vxqJwS6QEd-pNfzbJsur0g);DBServer (ID: _7jiyMV5LEeavvL8WcdoZSg);1;

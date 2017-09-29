@@ -21,6 +21,8 @@ public class TestConstants {
 	public static final String LQN_OUTPUT = "/Users/santiagovidal/git/headless-peropteryx/squat-tool/lqnout";
 	public static final String LQN_OUTPUT2 = "E:/Downloads/pcmtests/lqnout2";
 	public static final String PCM_STORAGE_PATH = "/Users/santiagovidal/git/headless-peropteryx/squat-tool/pcmStoragePath";
+	//public static final String MAIN_STORAGE_PATH="/Users/santiagovidal/Documents/Programacion/kamp-test/squat-tool/models";
+	public static final String MAIN_STORAGE_PATH="/Users/santiagovidal/Documents/Programacion/kamp-test/squat-tool/models/cocomeWithoutPickUpStoreAndServiceAdapter";
 	public static final String PCM_STORAGE_PATH2 = "E:/Downloads/pcmtests/testspace2";
 	public static final String PCM_MODEL_FILES = "file://Users/santiagovidal/git/headless-peropteryx/squat-tool/palladioDeinitions/";
 

@@ -1,0 +1,5 @@
+Created by Headless PerOpteryx
+Numeric ID:
+48803
+Genotype ID:
+3.6281944978786522;1545.4222198988116;5.7683960088486375;1139.5548855723328;5.040857687757313;1563.2297916685284;8.281872678586469;985481.2351831018;DBServer (ID: _7jiyMV5LEeavvL8WcdoZSg);Server3 (ID: _vxqJwS6QEd-pNfzbJsur0g);Server3 (ID: _vxqJwS6QEd-pNfzbJsur0g);Server3 (ID: _vxqJwS6QEd-pNfzbJsur0g);Server3 (ID: _vxqJwS6QEd-pNfzbJsur0g);Server1 (ID: _g7HJEC6MEd-Jla2o7wkBzQ);Server2 (ID: _h3wXgC6MEd-Jla2o7wkBzQ);1;1;
