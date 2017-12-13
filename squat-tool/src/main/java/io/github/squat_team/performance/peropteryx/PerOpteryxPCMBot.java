@@ -246,8 +246,8 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 		// TODO: use a stop criteria? Will improve speed in many cases
 		configuration.getTerminationCriteriaConfig().setActivateTerminationCriteria(true);
 		configuration.getTerminationCriteriaConfig().setActivateInsignificantFrontChange(true);
-		configuration.getTerminationCriteriaConfig().setInsignificantFrontChangeGenerationNumber(6);
-		configuration.getTerminationCriteriaConfig().setInsignificantFrontChangeImprovementPercentage(1);
+		configuration.getTerminationCriteriaConfig().setInsignificantFrontChangeGenerationNumber(4);
+		configuration.getTerminationCriteriaConfig().setInsignificantFrontChangeImprovementPercentage(3);
 	}
 
 	private void configureExportForOptimization() {
