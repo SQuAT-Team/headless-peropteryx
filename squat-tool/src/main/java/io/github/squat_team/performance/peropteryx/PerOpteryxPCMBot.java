@@ -35,6 +35,8 @@ import io.github.squat_team.performance.peropteryx.export.ExportModeImrpoved;
 import io.github.squat_team.performance.peropteryx.export.OptimizationDirectionImrpoved;
 import io.github.squat_team.performance.peropteryx.export.PerOpteryxPCMResultImrpoved;
 import io.github.squat_team.performance.peropteryx.start.MyHeadlessPerOpteryxRunnerImrpoved;
+import io.github.squat_team.util.DesigndecisionFileModifier;
+import io.github.squat_team.util.PCMFileFinder;
 import io.github.squat_team.util.PCMRepositoryModifier;
 import io.github.squat_team.util.PCMWorkingCopyCreator;
 import io.github.squat_team.util.SQuATHelper;
@@ -54,12 +56,11 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 	 * 
 	 * @param scenario
 	 * @param configuration
-	 *            the configuration should at least contain the paths to the
-	 *            general pcm files (not the instance!) and the paths for the
-	 *            export of the pcm models (should not contain other
-	 *            data/folders!). A QML file and a designdecision file will be
-	 *            generated automatically, if no path is given. Some values will
-	 *            be added or overwritten later.
+	 *            the configuration should at least contain the paths to the general
+	 *            pcm files (not the instance!) and the paths for the export of the
+	 *            pcm models (should not contain other data/folders!). A QML file
+	 *            and a designdecision file will be generated automatically, if no
+	 *            path is given. Some values will be added or overwritten later.
 	 */
 	public PerOpteryxPCMBot(AbstractPerformancePCMScenario scenario, ConfigurationImprovedImproved configuration) {
 		super(scenario);
@@ -93,8 +94,7 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 	}
 
 	/**
-	 * Perform a detailed analysis and create output file in human readable
-	 * form.
+	 * Perform a detailed analysis and create output file in human readable form.
 	 * 
 	 * @param architectureToAnalyze
 	 *            this architecture will be analyzed.
@@ -143,7 +143,7 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 			configureExportForOptimization();
 			configurePerOpteryxForOptimization();
 			validateConfiguration();
-			Future<List<PerOpteryxPCMResultImrpoved>> future = runPerOpteryx();
+			Future<List<PerOpteryxPCMResultImrpoved>> future = runPerOpteryx(copiedArchitecture);
 			List<PCMScenarioResult> results = exportOptimizationResults(future);
 			if (detailedAnalysis) {
 				analyzeDetailed(results);
@@ -218,11 +218,59 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 		}
 	}
 
-	private Future<List<PerOpteryxPCMResultImrpoved>> runPerOpteryx() {
+	private Future<List<PerOpteryxPCMResultImrpoved>> runPerOpteryx(PCMArchitectureInstance architecture) {
+		modifyDesigndecisionFile(architecture);
 		MyHeadlessPerOpteryxRunnerImrpoved runner = new MyHeadlessPerOpteryxRunnerImrpoved();
 		runner.init(configuration);
 		runner.setDebugMode(this.debugMode);
 		return ThreadPoolProvider.POOL.submit(runner);
+	}
+
+	private void modifyDesigndecisionFile(PCMArchitectureInstance architecture) {
+		if (configuration.getDesignDecisionConfig().isChangeToDesigndecisionFileNecessary()) {
+			if (configuration.getPerOpteryxConfig().getMode().equals(Mode.OPTIMIZE)) {
+				modifyDesignDecisionFile(new File(configuration.getPerOpteryxConfig().getDesignDecisionFile()));
+			} else if (configuration.getPerOpteryxConfig().getMode().equals(Mode.DESIGN_DECISIONS_AND_OPTIMIZE)) {
+				runDesignDecisionCreation();
+				updateDesignDecisionFileLocation(architecture);
+			}
+		}
+	}
+
+	private void runDesignDecisionCreation() {
+		configuration.getPerOpteryxConfig().setMode(Mode.DESIGN_DECISIONS);
+		MyHeadlessPerOpteryxRunnerImrpoved runner = new MyHeadlessPerOpteryxRunnerImrpoved();
+		runner.init(configuration);
+		runner.setDebugMode(this.debugMode);
+		Future<List<PerOpteryxPCMResultImrpoved>> tempResult = ThreadPoolProvider.POOL.submit(runner);
+		try {
+			// IMPORTANT: Call get to make sure the run terminated!
+			tempResult.get();
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		configuration.getPerOpteryxConfig().setMode(Mode.OPTIMIZE);
+	}
+
+	/**
+	 * Sets the location of the created designdecision file in the configuration.
+	 * 
+	 * @param architecture
+	 *            The model that should be modified.
+	 */
+	private void updateDesignDecisionFileLocation(PCMArchitectureInstance architecture) {
+		PCMFileFinder fileFinder = new PCMFileFinder(architecture);
+		String designDecisionPath = fileFinder.getPath() + File.separator + "default" + ".designdecision";
+		modifyDesignDecisionFile(new File(designDecisionPath));
+
+		configuration.getPerOpteryxConfig().setDesignDecisionFile("file:" + designDecisionPath);
+	}
+
+	private void modifyDesignDecisionFile(File designdecisionFile) {
+		DesigndecisionFileModifier designdecisionFileModifier = new DesigndecisionFileModifier(designdecisionFile,
+				configuration.getDesignDecisionConfig());
+		designdecisionFileModifier.modify();
 	}
 
 	private void configurePerOpteryx() {
@@ -315,9 +363,8 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 	}
 
 	/**
-	 * Prints all information from the loggers to the console. This option
-	 * requires a higher computational effort and is therefore deactivated by
-	 * default.
+	 * Prints all information from the loggers to the console. This option requires
+	 * a higher computational effort and is therefore deactivated by default.
 	 * 
 	 * @param debugMode
 	 *            true activates the unfiltered console output
@@ -331,10 +378,10 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 	}
 
 	/**
-	 * The detailed analysis writes additional information to the destination of
-	 * the pcm instances. This includes the utilization of the components and
-	 * servers used in the model. This option requires a higher computational
-	 * effort and is therefore deactivated by default.
+	 * The detailed analysis writes additional information to the destination of the
+	 * pcm instances. This includes the utilization of the components and servers
+	 * used in the model. This option requires a higher computational effort and is
+	 * therefore deactivated by default.
 	 * 
 	 * @param detailedAnalysis
 	 *            true activates the detailed analysis
