@@ -13,6 +13,7 @@ public class ConfigurationImprovedImproved extends AbstractConfigurationImproved
 	private PCMModelsConfigImproved pcmModelsConfig;
 	private PerOpteryxConfigImproved perOpteryxConfig;
 	private TerminationCriteriaConfigImrpoved terminationCriteriaConfig;
+	private DesigndecisionConfigImproved designDecisionConfig;
 	
 	private ExporterConfigImproved exporterConfig;
 
@@ -27,6 +28,7 @@ public class ConfigurationImprovedImproved extends AbstractConfigurationImproved
 		perOpteryxConfig = new PerOpteryxConfigImproved();
 		exporterConfig = new ExporterConfigImproved();
 		terminationCriteriaConfig = new TerminationCriteriaConfigImrpoved();
+		designDecisionConfig = new DesigndecisionConfigImproved();
 
 		configs.add(pcmInstanceConfig);
 		configs.add(lqnsConfig);
@@ -35,6 +37,7 @@ public class ConfigurationImprovedImproved extends AbstractConfigurationImproved
 		configs.add(perOpteryxConfig);
 		configs.add(exporterConfig);
 		configs.add(terminationCriteriaConfig);
+		configs.add(designDecisionConfig);
 	}
 
 	@Override
@@ -82,6 +85,10 @@ public class ConfigurationImprovedImproved extends AbstractConfigurationImproved
 
 	public TerminationCriteriaConfigImrpoved getTerminationCriteriaConfig() {
 		return terminationCriteriaConfig;
+	}
+	
+	public DesigndecisionConfigImproved getDesignDecisionConfig() {
+		return designDecisionConfig;
 	}
 
 	public void setTerminationCriteriaConfig(TerminationCriteriaConfigImrpoved terminationCriteriaConfig) {
