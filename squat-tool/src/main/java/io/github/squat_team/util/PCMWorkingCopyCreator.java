@@ -25,7 +25,7 @@ import io.github.squat_team.model.PCMArchitectureInstance;
  */
 public class PCMWorkingCopyCreator {
 
-	private static final String WORKING_COPY_NAME = "bot_workingcopy";
+	private String WORKING_COPY_NAME = "bot_workingcopy";
 	private static final String ALTERANTIVE_EXTENSION_NAME = "alternative";
 	private String modelName;
 	private File folder;
@@ -34,10 +34,15 @@ public class PCMWorkingCopyCreator {
 		this.modelName = modelName;
 		this.folder = folder;
 	}
-	
+	public PCMWorkingCopyCreator(String modelName, File folder, String botName) {
+		this(modelName, folder);
+		WORKING_COPY_NAME=WORKING_COPY_NAME+botName;
+	}
 	public PCMWorkingCopyCreator() {
 	}
-	
+	public PCMWorkingCopyCreator(String botName) {
+		WORKING_COPY_NAME=WORKING_COPY_NAME+botName;
+	}
 	
 	/**
 	 * Saves a working copy of the model to the same directory as the original.

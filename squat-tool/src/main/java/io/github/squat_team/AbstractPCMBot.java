@@ -14,7 +14,7 @@ public abstract class AbstractPCMBot {
 		this.scenario = scenario;
 	}
 	
-	public abstract PCMScenarioResult analyze(PCMArchitectureInstance currentArchitecture);
+	public abstract PCMScenarioResult analyze(PCMArchitectureInstance currentArchitecture, String botName);
 	public abstract List<PCMScenarioResult> searchForAlternatives(PCMArchitectureInstance currentArchitecture);
 	
 	public PCMScenario getScenario() {

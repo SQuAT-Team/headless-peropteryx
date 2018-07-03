@@ -81,8 +81,8 @@ public class SQuATMain {
 		configuration.getPcmModelsConfig().setPathmapFolder(TestConstants.PCM_MODEL_FILES);
 
 		// init bot
-		PerOpteryxPCMBot bot = new PerOpteryxPCMBot(scenario, configuration);
-		bot.setDebugMode(true);
+		PerOpteryxPCMBot bot = new PerOpteryxPCMBot(scenario, configuration,"Bot");
+		bot.setDebugMode(false);
 		bot.setDetailedAnalysis(true);
 
 		List<String> basicPaths = new ArrayList<String>();
@@ -174,7 +174,7 @@ public class SQuATMain {
 			throws IOException {
 		// run bot analyse
 		long start = System.currentTimeMillis();
-		PCMScenarioResult result = bot.analyze(architecture);
+		PCMScenarioResult result = bot.analyze(architecture,"");
 		long end = System.currentTimeMillis();
 
 		File basicFile = new File(TestConstants.BASIC_FILE_PATH);

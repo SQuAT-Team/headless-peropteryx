@@ -131,6 +131,8 @@ public class PerOpteryxConfigImproved extends AbstractConfigurationImproved {
 
 	public void setDesignDecisionFile(String designDecisionFile) {
 		this.designDecisionFile = designDecisionFile;
+		if(this.designDecisionFile.equals("/Users/santiagovidal/Documents/Programacion/kamp-test/squat-tool/file:/Users/santiagovidal/Documents/Programacion/kamp-test/squat-tool/models/cocomeWithResourceDemands/default.designdecision"))
+			this.designDecisionFile ="/Users/santiagovidal/Documents/Programacion/kamp-test/squat-tool/models/cocomeWithResourceDemands/default.designdecision";
 	}
 
 	public String getQmlDefinitionFile() {

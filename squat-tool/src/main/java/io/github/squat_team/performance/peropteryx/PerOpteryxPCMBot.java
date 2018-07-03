@@ -43,6 +43,7 @@ import io.github.squat_team.util.SQuATHelper;
 
 public class PerOpteryxPCMBot extends AbstractPCMBot {
 	private static Logger logger = Logger.getLogger(PerOpteryxPCMBot.class.getName());
+	private String botName;
 	private Level loglevel;
 	private ConfigurationImprovedImproved configuration;
 	private AbstractPerformancePCMScenario performanceScenario;
@@ -62,16 +63,17 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 	 *            and a designdecision file will be generated automatically, if no
 	 *            path is given. Some values will be added or overwritten later.
 	 */
-	public PerOpteryxPCMBot(AbstractPerformancePCMScenario scenario, ConfigurationImprovedImproved configuration) {
+	public PerOpteryxPCMBot(AbstractPerformancePCMScenario scenario, ConfigurationImprovedImproved configuration, String botName) {
 		super(scenario);
 		this.configuration = configuration;
 		this.performanceScenario = scenario;
+		this.botName=botName;
 	}
 
 	@Override
-	public PCMScenarioResult analyze(PCMArchitectureInstance currentArchitecture) {
+	public PCMScenarioResult analyze(PCMArchitectureInstance currentArchitecture, String botName) {
 		try {
-			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator();
+			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator(botName);
 			PCMArchitectureInstance copiedArchitecture = workingCopyCreator.createWorkingCopy(currentArchitecture);
 			performanceScenario.transform(copiedArchitecture);
 			configureWith(copiedArchitecture);

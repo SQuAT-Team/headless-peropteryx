@@ -118,7 +118,7 @@ public class PCMArchitectureInstance {
 		return repositoryWithAlternatives;
 	}
 
-	public void setRepositoryWithAlternatives(Repository repositoryWithAlternatives) {
+	public synchronized void setRepositoryWithAlternatives(Repository repositoryWithAlternatives) {
 		this.repositoryWithAlternatives = repositoryWithAlternatives;
 	}
 	
