@@ -70,8 +70,23 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 		this.botName=botName;
 	}
 
+	private String configurationDesigndecisionInitial;
+	private String configurationQMLDefinitionFileInitial;
+	
+	private void loadTemporarilyChangedConfiurationValues() {
+		configurationDesigndecisionInitial = configuration.getPerOpteryxConfig().getDesignDecisionFile();
+		configurationQMLDefinitionFileInitial = configuration.getPerOpteryxConfig().getQmlDefinitionFile();
+	}
+	
+	private void resetTemporarilyChangedConfiurationValues() {
+		configuration.getPerOpteryxConfig().setDesignDecisionFile(configurationDesigndecisionInitial);
+		configuration.getPerOpteryxConfig().setQmlDefinitionFile(configurationQMLDefinitionFileInitial);
+	}
+	
 	@Override
 	public PCMScenarioResult analyze(PCMArchitectureInstance currentArchitecture, String botName) {
+		PCMScenarioResult result;
+		loadTemporarilyChangedConfiurationValues();
 		try {
 			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator(botName);
 			PCMArchitectureInstance copiedArchitecture = workingCopyCreator.createWorkingCopy(currentArchitecture);
@@ -88,11 +103,13 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 				analyzeDetailed(copiedArchitecture, currentArchitecture);
 			}
 			SQuATHelper.delete(copiedArchitecture);
-			return LQNSResultConverter.convert(currentArchitecture, lqnsResult, performanceScenario.getMetric(), this);
+			result = LQNSResultConverter.convert(currentArchitecture, lqnsResult, performanceScenario.getMetric(), this);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			return null;
+			result = null;
 		}
+		resetTemporarilyChangedConfiurationValues();
+		return result;
 	}
 
 	/**
@@ -133,6 +150,8 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 
 	@Override
 	public List<PCMScenarioResult> searchForAlternatives(PCMArchitectureInstance currentArchitecture) {
+		List<PCMScenarioResult> results;
+		loadTemporarilyChangedConfiurationValues();
 		try {
 			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator();
 			PCMArchitectureInstance copiedArchitecture = workingCopyCreator.createWorkingCopy(currentArchitecture);
@@ -146,18 +165,19 @@ public class PerOpteryxPCMBot extends AbstractPCMBot {
 			configurePerOpteryxForOptimization();
 			validateConfiguration();
 			Future<List<PerOpteryxPCMResultImrpoved>> future = runPerOpteryx(copiedArchitecture);
-			List<PCMScenarioResult> results = exportOptimizationResults(future);
+			results = exportOptimizationResults(future);
 			if (detailedAnalysis) {
 				analyzeDetailed(results);
 			}
 			separateAll(results, repositoryModifier);
 			inverseTransformAll(results);
 			SQuATHelper.delete(copiedArchitecture);
-			return results;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			return new ArrayList<PCMScenarioResult>();
+			results = new ArrayList<PCMScenarioResult>();
 		}
+		resetTemporarilyChangedConfiurationValues();
+		return results;
 	}
 
 	private void separateAll(List<PCMScenarioResult> results, PCMRepositoryModifier repositoryModifier) {
