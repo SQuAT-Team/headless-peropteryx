@@ -3,7 +3,6 @@ package io.github.squat_team.performance.peropteryx.overwrite.analysis;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -18,10 +17,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
-import org.eclipse.swt.widgets.Display;
-//import org.eclipse.ui.IWorkbenchPage;
-//import org.eclipse.ui.PartInitException;
-//import org.eclipse.ui.PlatformUI;
 import org.palladiosimulator.pcm.usagemodel.UsageScenario;
 import org.palladiosimulator.solver.handler.LineServerHandler;
 import org.palladiosimulator.solver.handler.LineServerHandlerFactory;
@@ -32,7 +27,6 @@ import org.palladiosimulator.solver.transformations.ContextWrapper;
 import org.palladiosimulator.solver.transformations.SolverStrategy;
 import org.palladiosimulator.solver.visitors.UsageModelVisitor;
 import org.palladiosimulator.solver.visualisation.LQNHtmlResultGenerator;
-import org.palladiosimulator.solver.visualisation.LQNResultEditorInput;
 import org.palladiosimulator.solver.transformations.pcm2lqn.*;
 
 /**
@@ -79,8 +73,7 @@ import org.palladiosimulator.solver.transformations.pcm2lqn.*;
  */
 public class MyPcm2LqnStrategyImrpoved implements SolverStrategy {
 
-	private static Logger logger = Logger.getLogger(MyPcm2LqnStrategyImrpoved.class
-			.getName());
+	private static Logger logger = Logger.getLogger(MyPcm2LqnStrategyImrpoved.class.getName());
 
 	// the following filenames should be OS-independent
 	private String filenameInputXML;
@@ -91,8 +84,11 @@ public class MyPcm2LqnStrategyImrpoved implements SolverStrategy {
 	private static final String FILENAME_LQNS = "/usr/local/bin/lqns";
 	private static final String FILENAME_LQSIM = "lqsim";
 	private static final String FILENAME_LINE = "LINE";
-	
-	//file extension for XML should be .lqxo as that is registered in the org.palladio....lqn plugins now. Should not be one of .in, .lqn or .xlqn, as these are interpreted as the textual format by lqns. All other files extensions are interpreted as XML (see lqns manual). 
+
+	// file extension for XML should be .lqxo as that is registered in the
+	// org.palladio....lqn plugins now. Should not be one of .in, .lqn or .xlqn, as
+	// these are interpreted as the textual format by lqns. All other files
+	// extensions are interpreted as XML (see lqns manual).
 	public static final String LQN_FILE_EXTENSION = "lqxo";
 
 	// Return values of lqns
@@ -111,15 +107,12 @@ public class MyPcm2LqnStrategyImrpoved implements SolverStrategy {
 		Date date = new Date();
 		String timestamp = dateFormat.format(date);
 
-		filenameInputXML = getOutputFolder()
-				+ System.getProperty("file.separator") + "pcm2lqn" + timestamp
-				+ ".in."+LQN_FILE_EXTENSION;
-		filenameResultHumanReadable = getOutputFolder()
-				+ System.getProperty("file.separator") + "pcm2lqn" + timestamp
+		filenameInputXML = getOutputFolder() + System.getProperty("file.separator") + "pcm2lqn" + timestamp + ".in."
+				+ LQN_FILE_EXTENSION;
+		filenameResultHumanReadable = getOutputFolder() + System.getProperty("file.separator") + "pcm2lqn" + timestamp
 				+ ".out";
-		filenameResultXML = getOutputFolder()
-				+ System.getProperty("file.separator") + "pcm2lqn"
-				+ timestamp + ".out."+LQN_FILE_EXTENSION;
+		filenameResultXML = getOutputFolder() + System.getProperty("file.separator") + "pcm2lqn" + timestamp + ".out."
+				+ LQN_FILE_EXTENSION;
 	}
 
 	public String getFilenameResultXML() {
@@ -146,7 +139,7 @@ public class MyPcm2LqnStrategyImrpoved implements SolverStrategy {
 		String solverProgram = getSolverProgramName();
 		String lqnsOutputType = getLqnsOutputTypeName();
 		String lqnSimOutputType = getLqsimOutputTypeName();
-		
+
 		String options = "";
 
 		String resultFile = "";
@@ -156,93 +149,87 @@ public class MyPcm2LqnStrategyImrpoved implements SolverStrategy {
 
 		int exitVal = LQNS_RETURN_FATAL_ERROR;
 		String errorMessages = "";
-		
+
 		try {
 			String command = "";
-			
-			
-			
-			if (solverProgram.equals(FILENAME_LQNS) || solverProgram.equals(FILENAME_LQSIM)){
+
+			if (solverProgram.equals(FILENAME_LQNS) || solverProgram.equals(FILENAME_LQSIM)) {
 				String lqnOutputType = "";
 				if (solverProgram.equals(FILENAME_LQNS)) {
 
-					// check whether Pragmas (see LQN documentation) are used and if yes, set -P option
-					if (!config.getStopOnMessageLossLQNS() 
-							|| !"".equals(config.getPragmas())){
+					// check whether Pragmas (see LQN documentation) are used and if yes, set -P
+					// option
+					if (!config.getStopOnMessageLossLQNS() || !"".equals(config.getPragmas())) {
 						options += " -P ";
-						if (!config.getStopOnMessageLossLQNS()){
-							options += "stop-on-message-loss=false "; 
+						if (!config.getStopOnMessageLossLQNS()) {
+							options += "stop-on-message-loss=false ";
 						}
-						if (!"".equals(config.getPragmas())){
+						if (!"".equals(config.getPragmas())) {
 							options += config.getPragmas();
 						}
 					}
-					
+
 					lqnOutputType = lqnsOutputType;
 				} else if (solverProgram.equals(FILENAME_LQSIM)) {
 					// LQSim config
 					String blocks = config.getLQSimBlocks();
 					String runtime = config.getLQSimRuntime();
 
-					if (runtime != null && runtime != ""){
-						options += " -A "+runtime;
+					if (runtime != null && runtime != "") {
+						options += " -A " + runtime;
 					}
-					if (blocks != null && blocks != ""){
-						options += " -B "+blocks;
+					if (blocks != null && blocks != "") {
+						options += " -B " + blocks;
 					}
-					if (!config.getStopOnMessageLossLQSim()){
+					if (!config.getStopOnMessageLossLQSim()) {
 						options += " -P stop-on-message-loss=false";
 					}
-					
+
 					lqnOutputType = lqnSimOutputType;
 
 				}
 				if (lqnOutputType.equals(MessageStrings.LQN_OUTPUT_HUMAN)) {
 					inputFile = filenameInputXML;
 					resultFile = filenameResultHumanReadable;
-					command = solverProgram
-							+ options
-							+ " -o" + resultFile + " " + inputFile;
+					command = solverProgram + options + " -o" + resultFile + " " + inputFile;
 				} else if (lqnOutputType.equals(MessageStrings.LQN_OUTPUT_XML)
 						|| lqnOutputType.equals(MessageStrings.LQN_OUTPUT_HTML)) {
 
 					inputFile = filenameInputXML;
 					resultFile = filenameResultXML;
-					command = solverProgram
-							+ options
-							+ " -x -o" + resultFile + " " + inputFile;
+					command = solverProgram + options + " -x -o" + resultFile + " " + inputFile;
 				}
-			} else if(solverProgram.equals(FILENAME_LINE)){			
-				//Using line requires interaction with the server so execute it directly here
+			} else if (solverProgram.equals(FILENAME_LINE)) {
+				// Using line requires interaction with the server so execute it directly here
 				inputFile = filenameInputXML;
 				resultFile = filenameResultXML;
 				fixXmlHeader(inputFile);
 				LineServerHandlerFactory.setLINEPropertyFile(config.getLINEPropFile());
 				LineServerHandler lineHandler = LineServerHandlerFactory.getHandler();
-				//connect to LINE
-				lineHandler.connectToLINEServer();			
-				String  inputFileAbsPath = new File(inputFile).getAbsolutePath();
+				// connect to LINE
+				lineHandler.connectToLINEServer();
+				String inputFileAbsPath = new File(inputFile).getAbsolutePath();
 
-				//solve without random enviroment
-				lineHandler.solve(inputFileAbsPath,null);		
+				// solve without random enviroment
+				lineHandler.solve(inputFileAbsPath, null);
 				// wait for the model to be solved
 				while (!lineHandler.isSolved(inputFileAbsPath))
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
-						logger.error("Error watiting for LINE solution",e);
+						logger.error("Error watiting for LINE solution", e);
 					}
-				//terminate the connection
-				lineHandler.terminateLine();	
+				// terminate the connection
+				lineHandler.terminateLine();
 
 			}
 
-			//call the solver executale only if we are not using LINE
-			if(!solverProgram.equals(FILENAME_LINE)){
-				//apply the patch to fix the header
+			// call the solver executale only if we are not using LINE
+			if (!solverProgram.equals(FILENAME_LINE)) {
+				// apply the patch to fix the header
 				fixXmlHeader(inputFile);
-				
-				logger.warn("Calling LQN analysis tool with "+command);
+
+				logger.warn("Calling LQN analysis tool with " + command);
 				ProcessBuilder pb = new ProcessBuilder(splitToCommandArray(command));
 				pb.redirectErrorStream(true);
 				Process proc = pb.start();
@@ -266,74 +253,66 @@ public class MyPcm2LqnStrategyImrpoved implements SolverStrategy {
 		}
 
 		long timeAfterCalc = System.nanoTime();
-		long duration = TimeUnit.NANOSECONDS.toMillis(timeAfterCalc
-				- timeBeforeCalc);
+		long duration = TimeUnit.NANOSECONDS.toMillis(timeAfterCalc - timeBeforeCalc);
 		overallDuration += duration;
-		logger.warn("Finished Running " + solverProgram + ":\t\t" + duration
-				+ " ms");
-		logger
-		.warn("Completed Analysis:\t\t" + overallDuration
-				+ " ms overall");
+		logger.warn("Finished Running " + solverProgram + ":\t\t" + duration + " ms");
+		logger.warn("Completed Analysis:\t\t" + overallDuration + " ms overall");
 
 		/* return if results are available or throw exception. */
-		if(!solverProgram.equals(FILENAME_LINE)){
-			
-			if (exitVal == LQNS_RETURN_SUCCESS ) {
-				if (errorMessages.contains("error")){
-					logger.error("LQN analysis threw errors: "+errorMessages);
-					//					if (errorMessages.contains("is too high")){
-					//						throw new RuntimeException("The lqn model failed to converge. Detailed error: "+errorMessages);
-					//					}
+		if (!solverProgram.equals(FILENAME_LINE)) {
+
+			if (exitVal == LQNS_RETURN_SUCCESS) {
+				if (errorMessages.contains("error")) {
+					logger.error("LQN analysis threw errors: " + errorMessages);
+					// if (errorMessages.contains("is too high")){
+					// throw new RuntimeException("The lqn model failed to converge. Detailed error:
+					// "+errorMessages);
+					// }
 					logger.warn("Trying to continue and writing results to " + resultFile);
 				} else {
 					logger.warn("Analysis Result has been written to " + resultFile);
 				}
 
 				logger.warn("Analysis Result has been written to " + resultFile);
-				if (lqnsOutputType.equals(MessageStrings.LQN_OUTPUT_HTML)){
-					//showOutput(resultFile);
+				if (lqnsOutputType.equals(MessageStrings.LQN_OUTPUT_HTML)) {
+					// showOutput(resultFile);
 					LQNHtmlResultGenerator result = new LQNHtmlResultGenerator(resultFile);
 					result.display();
 				}
 
-			} else if (exitVal == LQNS_RETURN_MODEL_FAILED_TO_CONVERGE){
+			} else if (exitVal == LQNS_RETURN_MODEL_FAILED_TO_CONVERGE) {
 				logger.error(solverProgram + " exited with " + exitVal
 						+ ": The model failed to converge. Results are most likely inaccurate. ");
 				logger.warn("Analysis Result has been written to: " + resultFile);
 			} else {
 				String message = "";
 				if (exitVal == LQNS_RETURN_INVALID_INPUT) {
-					message = solverProgram + " exited with " + exitVal
-							+ ": Invalid Input.";
+					message = solverProgram + " exited with " + exitVal + ": Invalid Input.";
 				} else if (exitVal == LQNS_RETURN_FATAL_ERROR) {
-					message = solverProgram + " exited with " + exitVal
-							+ ": Fatal error";
+					message = solverProgram + " exited with " + exitVal + ": Fatal error";
 				} else {
-					message = solverProgram
-							+ " returned an unrecognised exit value "
-							+ exitVal
+					message = solverProgram + " returned an unrecognised exit value " + exitVal
 							+ ". Key: 0 on success, 1 if the model failed to meet the convergence criteria, 2 if the input was invalid, 4 if a command line argument was incorrect, 8 for file read/write problems and -1 for fatal errors. If multiple input files are being processed, the exit code is the bit-wise OR of the above conditions.";
 				}
-				message += "\nFurther errors: "+errorMessages;
+				message += "\nFurther errors: " + errorMessages;
 				logger.error(message);
 				throw new RuntimeException(message);
 			}
 		}
-		//if we are using the Performance Engine Solver
-		else{
+		// if we are using the Performance Engine Solver
+		else {
 			logger.info("Using the perfromance Engine Solver");
-			logger.info("Exit val: "+exitVal);
-			logger.info("Results written in: "+resultFile);
+			logger.info("Exit val: " + exitVal);
+			logger.info("Results written in: " + resultFile);
 		}
 	}
-
 
 	private String getSolverProgramName() {
 		if (config.getSolver().equals(MessageStrings.LQNS_SOLVER)) {
 			return FILENAME_LQNS;
 		} else if (config.getSolver().equals(MessageStrings.LINE_SOLVER)) {
 			return FILENAME_LINE;
-		} else{
+		} else {
 			return FILENAME_LQSIM;
 		}
 	}
@@ -345,7 +324,7 @@ public class MyPcm2LqnStrategyImrpoved implements SolverStrategy {
 	private String getLqsimOutputTypeName() {
 		return config.getLqsimOutput();
 	}
-	
+
 	public String getFilenameInputXML() {
 		return filenameInputXML;
 	}
@@ -355,51 +334,32 @@ public class MyPcm2LqnStrategyImrpoved implements SolverStrategy {
 	 * 
 	 * @param filename
 	 */
-	/*private void showOutput(String filename) {
-		FileInputStream fis = null;
-		byte b[] = null;
-		try {
-			fis = new FileInputStream(filename);
-			int x = 0;
-			x = fis.available();
-			b = new byte[x];
-			fis.read(b);
-			fis.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		String content = new String(b);
-
-		final String htmlText = getHtmlForLqnResult(content);
-		
-//		ResultWindow rw = new ResultWindow(content);
-//		rw.open();
-
-		Display.getDefault().asyncExec(new Runnable() {
-			public void run() {
-				IWorkbenchPage page = PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow().getActivePage();
-				if (page != null) {
-					try {
-						page.openEditor(new LQNResultEditorInput(htmlText),
-								"org.palladiosimulator.solver.LQNResultEditor");
-					} catch (PartInitException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		
-	}*/
+	/*
+	 * private void showOutput(String filename) { FileInputStream fis = null; byte
+	 * b[] = null; try { fis = new FileInputStream(filename); int x = 0; x =
+	 * fis.available(); b = new byte[x]; fis.read(b); fis.close(); } catch
+	 * (FileNotFoundException e) { e.printStackTrace(); } catch (IOException e) {
+	 * e.printStackTrace(); }
+	 * 
+	 * String content = new String(b);
+	 * 
+	 * final String htmlText = getHtmlForLqnResult(content);
+	 * 
+	 * // ResultWindow rw = new ResultWindow(content); // rw.open();
+	 * 
+	 * Display.getDefault().asyncExec(new Runnable() { public void run() {
+	 * IWorkbenchPage page = PlatformUI.getWorkbench()
+	 * .getActiveWorkbenchWindow().getActivePage(); if (page != null) { try {
+	 * page.openEditor(new LQNResultEditorInput(htmlText),
+	 * "org.palladiosimulator.solver.LQNResultEditor"); } catch (PartInitException
+	 * e) { e.printStackTrace(); } } } });
+	 * 
+	 * }
+	 */
 
 	private String getHtmlForLqnResult(String lqnResult) {
-		String htmlText = "<html><head><title>LQN Results</title></head>" +
-				"<body><pre>" +
-				lqnResult +
-				"</pre></body></html>";
+		String htmlText = "<html><head><title>LQN Results</title></head>" + "<body><pre>" + lqnResult
+				+ "</pre></body></html>";
 		return htmlText;
 	}
 
@@ -409,72 +369,69 @@ public class MyPcm2LqnStrategyImrpoved implements SolverStrategy {
 	public void transform(PCMInstance model) {
 		long startTime = System.nanoTime();
 
-		runDSolver(model);
+		// There should only be one transformation at a time, because this code does not
+		// behave thread-safe.
+		synchronized (MyPcm2LqnStrategyImrpoved.class) {
+			runDSolver(model);
 
-		long timeAfterDSolve = System.nanoTime();
-		long duration = TimeUnit.NANOSECONDS.toMillis(timeAfterDSolve
-				- startTime);
-		overallDuration += duration;
-		logger.warn("Finished DSolver:\t\t" + duration + " ms");
+			long timeAfterDSolve = System.nanoTime();
+			long duration = TimeUnit.NANOSECONDS.toMillis(timeAfterDSolve - startTime);
+			overallDuration += duration;
+			logger.warn("Finished DSolver:\t\t" + duration + " ms");
 
-		long timeBeforeTransform = System.nanoTime();
+			long timeBeforeTransform = System.nanoTime();
 
-		// model.saveComputedContextToFiles(System.getProperty("user.dir")
-		// + System.getProperty("file.separator")+"computedContexts");
+			// model.saveComputedContextToFiles(System.getProperty("user.dir")
+			// + System.getProperty("file.separator")+"computedContexts");
 
-		runPcm2Lqn(model);
+			runPcm2Lqn(model);
 
-		long timeAfterTransform = System.nanoTime();
-		long duration2 = TimeUnit.NANOSECONDS.toMillis(timeAfterTransform
-				- timeBeforeTransform);
-		overallDuration += duration2;
-		logger.warn("Finished PCM2LQN:\t\t" + duration2 + " ms");
+			long timeAfterTransform = System.nanoTime();
+			long duration2 = TimeUnit.NANOSECONDS.toMillis(timeAfterTransform - timeBeforeTransform);
+			overallDuration += duration2;
+			logger.warn("Finished PCM2LQN:\t\t" + duration2 + " ms");
+		}
+
 	}
 
 	private void runPcm2Lqn(PCMInstance model) {
 
 		LqnBuilder lqnBuilder = new LqnBuilder(config.isInfiniteTaskMultiplicity());
-		
-		if (getSolverProgramName().equals(FILENAME_LQSIM)){
+
+		if (getSolverProgramName().equals(FILENAME_LQSIM)) {
 			lqnBuilder.setIsLQSimAnalysis(true);
 		}
 
-		ResourceEnvironment2Lqn reVisitor = new ResourceEnvironment2Lqn(
-				lqnBuilder, config);
+		ResourceEnvironment2Lqn reVisitor = new ResourceEnvironment2Lqn(lqnBuilder, config);
 		reVisitor.doSwitch(model.getResourceEnvironment());
 
-		UsageModel2Lqn umVisitor = new UsageModel2Lqn(lqnBuilder,
-				new ContextWrapper(model));
+		UsageModel2Lqn umVisitor = new UsageModel2Lqn(lqnBuilder, new ContextWrapper(model));
 		umVisitor.doSwitch(model.getUsageModel());
 
 		lqnBuilder.finalizeLqnModel(config);
 
-		LqnXmlHandler lqnXmlHandler = new LqnXmlHandler(lqnBuilder
-				.getLqnModel());
+		LqnXmlHandler lqnXmlHandler = new LqnXmlHandler(lqnBuilder.getLqnModel());
 		lqnXmlHandler.saveModelToXMI(filenameInputXML);
 
 		Pcm2LqnHelper.clearGuidMap();
-		//runLqn2Xml();
-		//runLqn2XmlReformat();
-
+		// runLqn2Xml();
+		// runLqn2XmlReformat();
 	}
 
 	private void runDSolver(PCMInstance model) {
 		// TODO: fix this (only uses one usage scenario):
 		UsageModelVisitor visitor = new UsageModelVisitor(model);
-		List<UsageScenario> scenarios = model.getUsageModel()
-				.getUsageScenario_UsageModel();
+		List<UsageScenario> scenarios = model.getUsageModel().getUsageScenario_UsageModel();
 		for (UsageScenario usageScenario : scenarios) {
-			visitor
-					.doSwitch(usageScenario
-							.getScenarioBehaviour_UsageScenario());
+			visitor.doSwitch(usageScenario.getScenarioBehaviour_UsageScenario());
 		}
 	}
 
 	/**
 	 * 
 	 * @param is
-	 * @return the concatenated String of all error messages encountered during the analysis
+	 * @return the concatenated String of all error messages encountered during the
+	 *         analysis
 	 */
 	private String readStream(InputStream is) {
 		String errorMessages = "";
@@ -527,51 +484,51 @@ public class MyPcm2LqnStrategyImrpoved implements SolverStrategy {
 		// default:
 		// return Level.INFO;
 	}
-	
 
 	/**
-	 * Original patch from Gregory Franks, used to fix the XML header of the generated file
+	 * Original patch from Gregory Franks, used to fix the XML header of the
+	 * generated file
+	 * 
 	 * @param inputFile
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	private void fixXmlHeader(String inputFile) throws FileNotFoundException,
-			IOException {
-		//Read the XML input file encoding the LQN instance
+	private void fixXmlHeader(String inputFile) throws FileNotFoundException, IOException {
+		// Read the XML input file encoding the LQN instance
 		FileReader fr = new FileReader(inputFile);
 		BufferedReader br = new BufferedReader(fr);
-		//Skip the first line (wrong encoding ASCII)
+		// Skip the first line (wrong encoding ASCII)
 		br.readLine();
-		//Read the following lines
+		// Read the following lines
 		List<String> content = new ArrayList<String>();
 		String line = br.readLine();
 		while (line != null) {
 			content.add(line + "\n");
 			line = br.readLine();
- 		}
-		//Close the file
+		}
+		// Close the file
 		br.close();
 		fr.close();
-		//Delete the file
+		// Delete the file
 		File f = new File(inputFile);
 		f.delete();
-		//Create a new file with the same name and start writing in it				
-		File recordFile = new File(inputFile);			
+		// Create a new file with the same name and start writing in it
+		File recordFile = new File(inputFile);
 		FileWriter recordFw = new FileWriter(recordFile);
 		BufferedWriter recordBw = new BufferedWriter(recordFw);
-		//Write the correct XML header (encoding us-ascii)
+		// Write the correct XML header (encoding us-ascii)
 		recordBw.write("<?xml version=\"1.0\" encoding=\"us-ascii\"?>\n");
 		recordBw.flush();
-		//Write all the following lines
+		// Write all the following lines
 		for (String s : content) {
 			recordBw.write(s);
 			recordBw.flush();
 		}
-		//Close the file
+		// Close the file
 		recordBw.close();
 		recordFw.close();
- 	}
-	
+	}
+
 }
 
 // TODO: Anne: delete this method and the related comments above if the changes
@@ -580,8 +537,7 @@ public class MyPcm2LqnStrategyImrpoved implements SolverStrategy {
 @Deprecated
 class StreamGobbler extends Thread {
 
-	private static Logger logger = Logger.getLogger(StreamGobbler.class
-			.getName());
+	private static Logger logger = Logger.getLogger(StreamGobbler.class.getName());
 
 	InputStream is;
 	String type;
@@ -608,5 +564,5 @@ class StreamGobbler extends Thread {
 			ioe.printStackTrace();
 		}
 	}
-	 
+
 }
