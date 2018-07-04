@@ -54,7 +54,7 @@ public class PerformancePCMUsageScenario extends AbstractPerformancePCMScenario 
 		UsageModel usageModel = architecture.getUsageModel();
 		findLoops(usageModel);
 		setNewLoopIterationNumber();
-		architecture.saveModel();
+		PCMArchitectureInstance.saveModel(usageModel.eResource());
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class PerformancePCMUsageScenario extends AbstractPerformancePCMScenario 
 		UsageModel usageModel = architecture.getUsageModel();
 		findLoops(usageModel);
 		setOldLoopIterationNumber();
-		architecture.saveModel();
+		PCMArchitectureInstance.saveModel(usageModel.eResource());
 	}
 
 	/**

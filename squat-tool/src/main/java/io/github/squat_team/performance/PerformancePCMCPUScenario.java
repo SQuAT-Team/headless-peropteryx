@@ -77,14 +77,14 @@ public class PerformancePCMCPUScenario extends AbstractPerformancePCMScenario {
 	public void transform(PCMArchitectureInstance architecture) {
 		ResourceEnvironment resourceEnvironment = architecture.getResourceEnvironment();
 		setProcessingRateInCPU(resourceEnvironment, this.processingRateFactor);
-		architecture.saveModel();
+		PCMArchitectureInstance.saveModel(resourceEnvironment.eResource());
 	}
 
 	@Override
 	public void inverseTransform(PCMArchitectureInstance architecture) {
 		ResourceEnvironment resourceEnvironment = architecture.getResourceEnvironment();
 		setProcessingRateInCPU(resourceEnvironment, 1.0 / this.processingRateFactor);
-		architecture.saveModel();
+		PCMArchitectureInstance.saveModel(resourceEnvironment.eResource());
 	}
 
 }
