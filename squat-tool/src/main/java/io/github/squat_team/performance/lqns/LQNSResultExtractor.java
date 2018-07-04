@@ -26,7 +26,7 @@ import io.github.squat_team.performance.peropteryx.overwrite.analysis.MyLQNQuali
  */
 public class LQNSResultExtractor {
 
-	public static LQNSResult extract(PCMInstance pcmInstance, ConfigurationImprovedImproved configuration, String outputPath)
+	public static synchronized LQNSResult extract(PCMInstance pcmInstance, ConfigurationImprovedImproved configuration, String outputPath)
 			throws CoreException, AnalysisFailedException {
 		DSEWorkflowConfiguration dseConfiguration = buildDSEWorkflowConfiguration(configuration);
 		Criterion criterion = buildCriterion(pcmInstance, dseConfiguration);
