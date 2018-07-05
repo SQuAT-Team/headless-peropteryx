@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
+import java.util.logging.LogManager;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.palladiosimulator.pcm.core.entity.NamedElement;
 import org.palladiosimulator.solver.models.PCMInstance;
@@ -26,6 +28,10 @@ import io.github.squat_team.util.SQuATHelper;
 /**
  * A thread-safe and optimized implementation of the
  * {@link AbstractPerOpteryxPCMBot}. Each bot assures that its name is unique.
+ * 
+ * Note: You should either set all bots to debugMode or none. Please note that
+ * while a bot is running, other debug messages in org.apache.log4j might be
+ * suppressed!
  *
  */
 public class ConcurrentPerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
@@ -152,13 +158,35 @@ public class ConcurrentPerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 			analyzeDetailed(result.getResultingArchitecture(), result.getResultingArchitecture());
 		}
 	}
-	
-	protected void activateLog() {
-		
+
+	/**
+	 * If this is the last bot leaving the critical part, the logging will be
+	 * activated.
+	 */
+	protected synchronized void activateLog() {
+		if (!debugMode) {
+			RunningBotsRegistry registry = RunningBotsRegistry.getInstance();
+			if (!registry.moreThanOneBotRunning()) {
+				org.apache.log4j.LogManager.getRootLogger().setLevel(registry.getLoglevel());
+			}
+			registry.deregisterBot(this);
+		}
 	}
-	
-	protected void deactivateLog() {
-		
+
+	/**
+	 * If this is the first bot leaving the ciritcal part, the logging will be
+	 * deactivated
+	 */
+	protected synchronized void deactivateLog() {
+		if (!debugMode) {
+			RunningBotsRegistry registry = RunningBotsRegistry.getInstance();
+			registry.registerBot(this);
+			if (!registry.moreThanOneBotRunning()) {
+				LogManager.getLogManager().reset();
+				registry.setLoglevel(org.apache.log4j.LogManager.getRootLogger().getLevel());
+				org.apache.log4j.LogManager.getRootLogger().setLevel(Level.OFF);
+			}
+		}
 	}
 
 }
