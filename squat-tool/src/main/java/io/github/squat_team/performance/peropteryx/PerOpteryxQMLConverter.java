@@ -18,19 +18,26 @@ public class PerOpteryxQMLConverter {
 	private static final String FILE_NAME = "AUTOGEN_";
 
 	public static String convert(String usageModelPath, AbstractPerformancePCMScenario scenario) throws IOException {
+		return convert(null, usageModelPath, null, scenario);
+	}
+	
+	public static String convert(String usageModelName, String usageModelPath, String botName, AbstractPerformancePCMScenario scenario) throws IOException {
 		String usageModelFileName = getFileName(usageModelPath);
 		String usageModelID = searchForUsageModelID(usageModelPath);
 		String objectiveID = chooseObjectictiveID(scenario.getMetric());
 		String outputFilePath = getFilePath(usageModelPath);
-		String outputFileName = generateOutputFileName(scenario.getMetric());
+		String outputFileName = generateOutputFileName(usageModelName,botName,scenario.getMetric());
 
 		List<String> lines = generateFileData(usageModelFileName, usageModelID, objectiveID);
 		createFile(outputFilePath + outputFileName, lines);
 		return outputFilePath + outputFileName;
 	}
 
-	private static String generateOutputFileName(PerformanceMetric metric) {
-		return FILE_NAME + metric.toString() + FILE_EXTENSION;
+	private static String generateOutputFileName(String usageModelName, String botName, PerformanceMetric metric) {
+		if(botName == null && usageModelName == null) {
+			return FILE_NAME + metric.toString() + FILE_EXTENSION;
+		}
+		return usageModelName + "-" + botName +"_" + metric.toString() + FILE_EXTENSION;
 	}
 
 	private static void createFile(String outputPath, List<String> lines) throws IOException {

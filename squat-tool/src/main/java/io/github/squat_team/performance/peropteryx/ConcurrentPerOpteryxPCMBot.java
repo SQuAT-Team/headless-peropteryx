@@ -21,6 +21,7 @@ import io.github.squat_team.performance.lqns.LQNSResultConverter;
 import io.github.squat_team.performance.lqns.LQNSResultExtractor;
 import io.github.squat_team.performance.peropteryx.configuration.ConfigurationImprovedImproved;
 import io.github.squat_team.performance.peropteryx.export.PerOpteryxPCMResultImrpoved;
+import io.github.squat_team.util.PCMFileFinder;
 import io.github.squat_team.util.PCMRepositoryModifier;
 import io.github.squat_team.util.PCMWorkingCopyCreator;
 import io.github.squat_team.util.SQuATHelper;
@@ -28,6 +29,11 @@ import io.github.squat_team.util.SQuATHelper;
 /**
  * A thread-safe and optimized implementation of the
  * {@link AbstractPerOpteryxPCMBot}. Each bot assures that its name is unique.
+ * 
+ * Thread-safe in this case means that the bots will behave correctly in nearly
+ * all parallel execution scenarios. However, it should be avoided to run
+ * analysis and search for alternatives in parallel, as this setting could still
+ * have some undetected error cases.
  * 
  * Note: You should either set all bots to debugMode or none. Please note that
  * while a bot is running, other debug messages in org.apache.log4j might be
@@ -60,8 +66,9 @@ public class ConcurrentPerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 	public synchronized PCMScenarioResult analyze(PCMArchitectureInstance currentArchitecture) {
 		PCMScenarioResult result;
 		loadTemporarilyChangedConfiurationValues();
+		currentModelName = (new PCMFileFinder(currentArchitecture)).getName();
 		try {
-			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator(botName);
+			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator(currentModelName, botName);
 			PCMArchitectureInstance copiedArchitecture = workingCopyCreator.createWorkingCopy(currentArchitecture);
 			performanceScenario.transform(copiedArchitecture);
 			configureWith(copiedArchitecture);
@@ -95,8 +102,9 @@ public class ConcurrentPerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 	public synchronized List<PCMScenarioResult> searchForAlternatives(PCMArchitectureInstance currentArchitecture) {
 		List<PCMScenarioResult> results;
 		loadTemporarilyChangedConfiurationValues();
+		currentModelName = (new PCMFileFinder(currentArchitecture)).getName();
 		try {
-			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator();
+			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator(currentModelName, botName);
 			PCMArchitectureInstance copiedArchitecture = workingCopyCreator.createWorkingCopy(currentArchitecture);
 			PCMRepositoryModifier repositoryModifier = new PCMRepositoryModifier(copiedArchitecture);
 			repositoryModifier.mergeRepositories();
@@ -107,8 +115,14 @@ public class ConcurrentPerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 			configureExportForOptimization();
 			configurePerOpteryxForOptimization();
 			validateConfiguration();
-			Future<List<PerOpteryxPCMResultImrpoved>> future = runPerOpteryx(copiedArchitecture);
-			results = exportOptimizationResults(future);
+			List<PerOpteryxPCMResultImrpoved> peropteryxResult;
+			synchronized (ConcurrentPerOpteryxPCMBot.class) {
+				deactivateLog();
+				Future<List<PerOpteryxPCMResultImrpoved>> future = runPerOpteryx(copiedArchitecture, false);
+				peropteryxResult = getPerOpteryxResults(future);
+				activateLog();
+			}
+			results = PerOpteryxResultConverter.convert(peropteryxResult, this);
 			if (detailedAnalysis) {
 				analyzeDetailed(results);
 			}

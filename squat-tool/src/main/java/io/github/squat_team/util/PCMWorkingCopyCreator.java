@@ -43,6 +43,9 @@ public class PCMWorkingCopyCreator {
 	public PCMWorkingCopyCreator(String botName) {
 		WORKING_COPY_NAME=WORKING_COPY_NAME+botName;
 	}
+	public PCMWorkingCopyCreator(String ModelName, String botName) {
+		WORKING_COPY_NAME=ModelName+"-"+botName;
+	}
 	
 	/**
 	 * Saves a working copy of the model to the same directory as the original.

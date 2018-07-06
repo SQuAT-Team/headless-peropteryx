@@ -19,6 +19,7 @@ import io.github.squat_team.performance.lqns.LQNSDetailedResultWriter;
 import io.github.squat_team.performance.lqns.LQNSResult;
 import io.github.squat_team.performance.peropteryx.configuration.ConfigurationImprovedImproved;
 import io.github.squat_team.performance.peropteryx.export.PerOpteryxPCMResultImrpoved;
+import io.github.squat_team.util.PCMFileFinder;
 import io.github.squat_team.util.PCMRepositoryModifier;
 import io.github.squat_team.util.PCMWorkingCopyCreator;
 import io.github.squat_team.util.SQuATHelper;
@@ -52,6 +53,7 @@ public class PerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 	public PCMScenarioResult analyze(PCMArchitectureInstance currentArchitecture, String botName) {
 		PCMScenarioResult result;
 		loadTemporarilyChangedConfiurationValues();
+		currentModelName = (new PCMFileFinder(currentArchitecture)).getName();
 		try {
 			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator(botName);
 			PCMArchitectureInstance copiedArchitecture = workingCopyCreator.createWorkingCopy(currentArchitecture);		
@@ -117,6 +119,7 @@ public class PerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 	public List<PCMScenarioResult> searchForAlternatives(PCMArchitectureInstance currentArchitecture) {
 		List<PCMScenarioResult> results;
 		loadTemporarilyChangedConfiurationValues();
+		currentModelName = (new PCMFileFinder(currentArchitecture)).getName();
 		try {
 			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator();
 			PCMArchitectureInstance copiedArchitecture = workingCopyCreator.createWorkingCopy(currentArchitecture);
@@ -129,8 +132,9 @@ public class PerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 			configureExportForOptimization();
 			configurePerOpteryxForOptimization();
 			validateConfiguration();
-			Future<List<PerOpteryxPCMResultImrpoved>> future = runPerOpteryx(copiedArchitecture);
-			results = exportOptimizationResults(future);
+			Future<List<PerOpteryxPCMResultImrpoved>> future = runPerOpteryx(copiedArchitecture, this.debugMode);
+			List<PerOpteryxPCMResultImrpoved> peropteryxResult = getPerOpteryxResults(future);
+			results = PerOpteryxResultConverter.convert(peropteryxResult, this);
 			if (detailedAnalysis) {
 				analyzeDetailed(results);
 			}

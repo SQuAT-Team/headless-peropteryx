@@ -41,6 +41,7 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 
 	// Bot State
 	protected String botName;
+	protected String currentModelName;
 	protected ConfigurationImprovedImproved configuration;
 	protected AbstractPerformancePCMScenario performanceScenario;
 
@@ -71,7 +72,7 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 	public String getBotName() {
 		return botName;
 	}
-	
+
 	public Boolean getDebugMode() {
 		return debugMode;
 	}
@@ -161,24 +162,23 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 		}
 	}
 
-	protected List<PCMScenarioResult> exportOptimizationResults(Future<List<PerOpteryxPCMResultImrpoved>> future) {
+	protected List<PerOpteryxPCMResultImrpoved> getPerOpteryxResults(Future<List<PerOpteryxPCMResultImrpoved>> future) {
 		try {
-			List<PerOpteryxPCMResultImrpoved> peropteryxResult = future.get();
-			return PerOpteryxResultConverter.convert(peropteryxResult, this);
+			return future.get();
 		} catch (InterruptedException e) {
 			logger.error(e.getMessage(), e);
-			return new ArrayList<PCMScenarioResult>();
+			return new ArrayList<PerOpteryxPCMResultImrpoved>();
 		} catch (ExecutionException e) {
 			logger.error(e.getMessage(), e);
-			return new ArrayList<PCMScenarioResult>();
+			return new ArrayList<PerOpteryxPCMResultImrpoved>();
 		}
 	}
 
-	protected Future<List<PerOpteryxPCMResultImrpoved>> runPerOpteryx(PCMArchitectureInstance architecture) {
+	protected Future<List<PerOpteryxPCMResultImrpoved>> runPerOpteryx(PCMArchitectureInstance architecture, boolean headlessPerOpteryxMode) {
 		modifyDesigndecisionFile(architecture);
 		MyHeadlessPerOpteryxRunnerImrpoved runner = new MyHeadlessPerOpteryxRunnerImrpoved();
 		runner.init(configuration);
-		runner.setDebugMode(this.debugMode);
+		runner.setDebugMode(headlessPerOpteryxMode);
 		return ThreadPoolProvider.POOL.submit(runner);
 	}
 
@@ -229,7 +229,7 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 		String qmlPath = configuration.getPerOpteryxConfig().getQmlDefinitionFile();
 		if (qmlPath == null || qmlPath.isEmpty()) {
 			String generatedQmlFilePath = PerOpteryxQMLConverter
-					.convert(configuration.getPcmInstanceConfig().getUsageModel(), scenario);
+					.convert(currentModelName, configuration.getPcmInstanceConfig().getUsageModel(), getBotName(), scenario);
 			configuration.getPerOpteryxConfig().setQmlDefinitionFile(generatedQmlFilePath);
 		}
 	}
@@ -248,8 +248,12 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 			if (configuration.getPerOpteryxConfig().getMode().equals(Mode.OPTIMIZE)) {
 				modifyDesignDecisionFile(new File(configuration.getPerOpteryxConfig().getDesignDecisionFile()));
 			} else if (configuration.getPerOpteryxConfig().getMode().equals(Mode.DESIGN_DECISIONS_AND_OPTIMIZE)) {
+				PCMFileFinder fileFinder = new PCMFileFinder(architecture);
+				String designDecisionPath = fileFinder.getPath() + File.separator + currentModelName + "-"
+						+ this.getBotName() + ".designdecision";
+				configuration.getPerOpteryxConfig().setDesignDecisionFile("file:" + designDecisionPath);
 				runDesignDecisionCreation();
-				updateDesignDecisionFileLocation(architecture);
+				modifyDesignDecisionFile(new File(designDecisionPath));
 			}
 		}
 	}
@@ -268,20 +272,6 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 			e.printStackTrace();
 		}
 		configuration.getPerOpteryxConfig().setMode(Mode.OPTIMIZE);
-	}
-
-	/**
-	 * Sets the location of the created designdecision file in the configuration.
-	 * 
-	 * @param architecture
-	 *            The model that should be modified.
-	 */
-	private void updateDesignDecisionFileLocation(PCMArchitectureInstance architecture) {
-		PCMFileFinder fileFinder = new PCMFileFinder(architecture);
-		String designDecisionPath = fileFinder.getPath() + File.separator + "default" + ".designdecision";
-		modifyDesignDecisionFile(new File(designDecisionPath));
-
-		configuration.getPerOpteryxConfig().setDesignDecisionFile("file:" + designDecisionPath);
 	}
 
 	private void modifyDesignDecisionFile(File designdecisionFile) {
