@@ -157,8 +157,9 @@ public class PCMRepositoryModifier {
 	 *            the alternative repository will be generated for this.
 	 */
 	public void separateRepository(PCMArchitectureInstance childArchitecture) {
-		List<String> unusedIDs = findUnusedAlternativeComponents(childArchitecture);
+		
 		try {
+			List<String> unusedIDs = findUnusedAlternativeComponents(childArchitecture);
 			createAlternativeRepository(childArchitecture, unusedIDs);
 			updateBaseRepository(childArchitecture, unusedIDs);
 		} catch (IOException e) {

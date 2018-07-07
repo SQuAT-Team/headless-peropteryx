@@ -86,6 +86,8 @@ public class ConcurrentPerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 			result = LQNSResultConverter.convert(currentArchitecture, lqnsResult, performanceScenario.getMetric(),
 					this);
 		} catch (Exception e) {
+			java.lang.System.out.println(currentArchitecture.getName());
+			java.lang.System.err.println(e);
 			LOGGER.error(e.getMessage(), e);
 			result = null;
 		}
