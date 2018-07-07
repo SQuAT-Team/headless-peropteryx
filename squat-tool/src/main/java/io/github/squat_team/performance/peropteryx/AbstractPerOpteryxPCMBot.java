@@ -23,6 +23,7 @@ import io.github.squat_team.model.PCMArchitectureInstance;
 import io.github.squat_team.model.PCMScenarioResult;
 import io.github.squat_team.performance.AbstractPerformancePCMScenario;
 import io.github.squat_team.performance.peropteryx.configuration.ConfigurationImprovedImproved;
+import io.github.squat_team.performance.peropteryx.configuration.PerOpteryxConfigImproved;
 import io.github.squat_team.performance.peropteryx.configuration.PerOpteryxConfigImproved.Mode;
 import io.github.squat_team.performance.peropteryx.environment.PalladioEclipseEnvironmentImrpoved;
 import io.github.squat_team.performance.peropteryx.export.ExportModeImrpoved;
@@ -52,6 +53,7 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 	// Stored values to reset it later
 	private String configurationDesigndecisionInitial;
 	private String configurationQMLDefinitionFileInitial;
+	private PerOpteryxConfigImproved.Mode configurationModeInitial;
 	private Level loglevel;
 
 	public AbstractPerOpteryxPCMBot(AbstractPerformancePCMScenario scenario,
@@ -108,11 +110,13 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 	protected void loadTemporarilyChangedConfiurationValues() {
 		configurationDesigndecisionInitial = configuration.getPerOpteryxConfig().getDesignDecisionFile();
 		configurationQMLDefinitionFileInitial = configuration.getPerOpteryxConfig().getQmlDefinitionFile();
+		configurationModeInitial = configuration.getPerOpteryxConfig().getMode();
 	}
 
 	protected void resetTemporarilyChangedConfiurationValues() {
 		configuration.getPerOpteryxConfig().setDesignDecisionFile(configurationDesigndecisionInitial);
 		configuration.getPerOpteryxConfig().setQmlDefinitionFile(configurationQMLDefinitionFileInitial);
+		configuration.getPerOpteryxConfig().setMode(configurationModeInitial);
 	}
 
 	protected void separateAll(List<PCMScenarioResult> results, PCMRepositoryModifier repositoryModifier) {
