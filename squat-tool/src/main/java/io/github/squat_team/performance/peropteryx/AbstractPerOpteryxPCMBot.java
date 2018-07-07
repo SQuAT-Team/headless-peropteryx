@@ -200,8 +200,8 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 		configuration.getTacticsConfig().useTactics(true);
 		if (configuration.getPerOpteryxConfig().getGenerationSize() <= 1
 				&& configuration.getPerOpteryxConfig().getMaxIterations() <= 1) {
-			configuration.getPerOpteryxConfig().setGenerationSize(100);
-			configuration.getPerOpteryxConfig().setMaxIterations(20);
+			configuration.getPerOpteryxConfig().setGenerationSize(25);
+			configuration.getPerOpteryxConfig().setMaxIterations(7);
 		}
 
 		// TODO: use a stop criteria? Will improve speed in many cases
