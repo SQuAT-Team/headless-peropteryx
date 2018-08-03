@@ -142,6 +142,7 @@ public class PCMFileExporterImrpoved {
 	private void saveAllFiles(PCMInstance pcm, String directoryPath) {
 		String allocationFilePath = directoryPath + FILE_PREFIX + ".allocation";
 		String usagemodelFilePath = directoryPath + FILE_PREFIX + ".usagemodel";
+		String systemFilePath = directoryPath + FILE_PREFIX + ".system";
 		pcm.saveToXMIFile(pcm.getAllocation(), allocationFilePath);
 		fixAllocationFile(new File(allocationFilePath), directoryPath);
 		
@@ -159,6 +160,7 @@ public class PCMFileExporterImrpoved {
 		pcm.saveToXMIFile(pcm.getResourceEnvironment(), directoryPath + FILE_PREFIX + ".resourceenvironment");
 		pcm.saveToXMIFile(pcm.getResourceRepository(), directoryPath + FILE_PREFIX + ".resourcetype");
 		pcm.saveToXMIFile(pcm.getSystem(), directoryPath + FILE_PREFIX + ".system");
+		fixSystemFile(new File(systemFilePath), directoryPath);
 		pcm.saveToXMIFile(pcm.getUsageModel(), directoryPath + FILE_PREFIX + ".usagemodel");
 		fixUsagemodelFile(new File(usagemodelFilePath), directoryPath);
 	}
@@ -245,7 +247,7 @@ public class PCMFileExporterImrpoved {
 			}
 		}
 	}
-	
+
 	/**
 	 * Replaces the links to the other PCM files with the correct ones.
 	 * 
@@ -274,7 +276,8 @@ public class PCMFileExporterImrpoved {
 
 				// Adjust paths in usagemodel file
 				str = sb.toString();
-				str = str.replaceAll("file:/" + ".*" + "cand", /*"file:/" + directoryPath + */FILE_PREFIX); // no absolute path
+				str = str.replaceAll("file:/" + ".*" + "\\.repository#", /*"file:/" + directoryPath + */FILE_PREFIX+ ".repository#"); // no absolute path
+				str = str.replaceAll("file:/" + ".*" + "\\.system#", /*"file:/" + directoryPath + */FILE_PREFIX+ ".system#"); // no absolute path
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
@@ -289,6 +292,63 @@ public class PCMFileExporterImrpoved {
 		}
 
 		// if successful, write back to usagemodel file
+		if (!str.equals("")) {
+			FileWriter fw;
+			try {
+				fw = new FileWriter(file.getAbsoluteFile());
+				BufferedWriter bw = new BufferedWriter(fw);
+				bw.write(str);
+				bw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+
+	/**
+	 * Replaces the links to the other PCM files with the correct ones.
+	 * 
+	 * @param file
+	 *            - the usagemodel file
+	 * @param directoryPath
+	 *            - the path of the pcm directory in which the usagemodel file
+	 *            is allocated
+	 */
+	private void fixSystemFile(File file, String directoryPath) {
+		String str = "";
+		BufferedReader br;
+
+		// Read system file
+		try {
+			br = new BufferedReader(new FileReader(file));
+			try {
+				StringBuilder sb = new StringBuilder();
+				String line = br.readLine();
+
+				while (line != null) {
+					sb.append(line);
+					sb.append(System.lineSeparator());
+					line = br.readLine();
+				}
+
+				// Adjust paths in system file
+				str = sb.toString();
+				str = str.replaceAll("file:/" + ".*" + "\\.repository#", /*"file:/" + directoryPath + */FILE_PREFIX+ ".repository#"); // no absolute path
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+
+		// if successful, write back to system file
 		if (!str.equals("")) {
 			FileWriter fw;
 			try {
