@@ -116,7 +116,7 @@ public class MyHeadlessPerOpteryxRunnerImrpoved implements Callable<List<PerOpte
 	}
 
 	private void initializeExporter() {
-		PCMFileExporterImrpoved.getInstance().init(configuration.getExporterConfig().getPcmOutputFolder());
+		PCMFileExporterImrpoved.getInstance().init(configuration.getExporterConfig().getPcmOutputFolder(), configuration.getExporterConfig().isMinimalExport());
 		PCMResultsProviderImrpoved.getInstance().setBoundaryValue(configuration.getExporterConfig().getBoundaryValue());
 		PCMResultsProviderImrpoved.getInstance().setDirection(configuration.getExporterConfig().getOptimizationDirection());
 		PCMResultsProviderImrpoved.getInstance().setExportMode(configuration.getExporterConfig().getExportMode());

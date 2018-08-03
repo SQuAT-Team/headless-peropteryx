@@ -5,9 +5,10 @@ import java.util.Map;
 import io.github.squat_team.performance.peropteryx.export.ExportModeImrpoved;
 import io.github.squat_team.performance.peropteryx.export.OptimizationDirectionImrpoved;
 
-public class ExporterConfigImproved extends AbstractConfigurationImproved{
+public class ExporterConfigImproved extends AbstractConfigurationImproved {
 
 	private String pcmOutputFolder = "";
+	private boolean minimalExport;
 	private double boundaryValue;
 	private int amount;
 	private ExportModeImrpoved extractionMode;
@@ -50,6 +51,7 @@ public class ExporterConfigImproved extends AbstractConfigurationImproved{
 		boundaryValue = 0.0;
 		extractionMode = ExportModeImrpoved.PARETO;
 		optimizationDirection = OptimizationDirectionImrpoved.MINIMIZE;
+		minimalExport = true;
 	}
 
 	@Override
@@ -70,5 +72,20 @@ public class ExporterConfigImproved extends AbstractConfigurationImproved{
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	
+
+	public boolean isMinimalExport() {
+		return minimalExport;
+	}
+
+	/**
+	 * This mode will reduce the number of exported files to a minimum, but they
+	 * will not be available for debugging. The benefit is a slight performance
+	 * improvement.
+	 * 
+	 * @param minimalExport
+	 */
+	public void setMinimalExport(boolean minimalExport) {
+		this.minimalExport = minimalExport;
+	}
+
 }

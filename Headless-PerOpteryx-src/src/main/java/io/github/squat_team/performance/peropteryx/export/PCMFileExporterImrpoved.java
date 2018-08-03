@@ -32,6 +32,7 @@ public class PCMFileExporterImrpoved {
 	public static final String FILE_PREFIX = "default";
 	private static Map<Long, PCMFileExporterImrpoved> threadInstances = new HashMap<Long, PCMFileExporterImrpoved>();
 
+	private boolean minimalExport;
 	private String date = getDate();
 	private String storagePath;
 	private int candidateCounter = 0;
@@ -61,8 +62,11 @@ public class PCMFileExporterImrpoved {
 	 * 
 	 * @param storagePath
 	 *            - path to the PCM directory.
+	 * @param minimalExport
+	 *            - reduces the number of exported files.
 	 */
-	public void init(String storagePath) {
+	public void init(String storagePath, boolean minimalExport) {
+		this.minimalExport = minimalExport;
 		this.storagePath = storagePath;
 		this.date = getDate();
 	}
@@ -152,13 +156,20 @@ public class PCMFileExporterImrpoved {
 			if(i == 1){
 				// this should be the right one
 				pcm.saveToXMIFile(repository, directoryPath + FILE_PREFIX + ".repository");
+				if(minimalExport) {
+					break;
+				}
 			}else{
-				pcm.saveToXMIFile(repository, directoryPath + FILE_PREFIX + i + ".repository");
+				if(!minimalExport) {
+					pcm.saveToXMIFile(repository, directoryPath + FILE_PREFIX + i + ".repository");
+				}
 			}
 			i++;
 		}
 		pcm.saveToXMIFile(pcm.getResourceEnvironment(), directoryPath + FILE_PREFIX + ".resourceenvironment");
-		pcm.saveToXMIFile(pcm.getResourceRepository(), directoryPath + FILE_PREFIX + ".resourcetype");
+		if(!minimalExport) {
+			pcm.saveToXMIFile(pcm.getResourceRepository(), directoryPath + FILE_PREFIX + ".resourcetype");
+		}
 		pcm.saveToXMIFile(pcm.getSystem(), directoryPath + FILE_PREFIX + ".system");
 		fixSystemFile(new File(systemFilePath), directoryPath);
 		pcm.saveToXMIFile(pcm.getUsageModel(), directoryPath + FILE_PREFIX + ".usagemodel");
