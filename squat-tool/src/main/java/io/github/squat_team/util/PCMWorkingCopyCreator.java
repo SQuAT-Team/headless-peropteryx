@@ -29,24 +29,28 @@ public class PCMWorkingCopyCreator {
 	private static final String ALTERANTIVE_EXTENSION_NAME = "alternative";
 	private String modelName;
 	private File folder;
-	
+
 	public PCMWorkingCopyCreator(String modelName, File folder) {
 		this.modelName = modelName;
 		this.folder = folder;
 	}
+
 	public PCMWorkingCopyCreator(String modelName, File folder, String botName) {
 		this(modelName, folder);
-		WORKING_COPY_NAME=WORKING_COPY_NAME+botName;
+		WORKING_COPY_NAME = WORKING_COPY_NAME + botName;
 	}
+
 	public PCMWorkingCopyCreator() {
 	}
+
 	public PCMWorkingCopyCreator(String botName) {
-		WORKING_COPY_NAME=WORKING_COPY_NAME+botName;
+		WORKING_COPY_NAME = WORKING_COPY_NAME + botName;
 	}
+
 	public PCMWorkingCopyCreator(String ModelName, String botName) {
-		WORKING_COPY_NAME=ModelName+"-"+botName;
+		WORKING_COPY_NAME = ModelName + "-" + botName;
 	}
-	
+
 	/**
 	 * Saves a working copy of the model to the same directory as the original.
 	 * 
@@ -60,21 +64,18 @@ public class PCMWorkingCopyCreator {
 		File file = null;
 		FileOutputStream fos = null;
 
-		
 		try {
-			 //create
-			if(folder == null || modelName == null){
+			// create
+			if (folder == null || modelName == null) {
 				file = new File(new File(resource.getURI().toFileString()).getParentFile(),
-						WORKING_COPY_NAME + "." + extension);			
-			}else{
-				if(altRepository){
-					file = new File(folder,
-							modelName + ALTERANTIVE_EXTENSION_NAME + "." + extension);	
-				}else{
-					file = new File(folder,
-							modelName + "." + extension);	
+						WORKING_COPY_NAME + "." + extension);
+			} else {
+				if (altRepository) {
+					file = new File(folder, modelName + ALTERANTIVE_EXTENSION_NAME + "." + extension);
+				} else {
+					file = new File(folder, modelName + "." + extension);
 				}
-	
+
 			}
 
 			file.createNewFile();
@@ -114,8 +115,8 @@ public class PCMWorkingCopyCreator {
 		org.palladiosimulator.pcm.system.System system = architecture.getSystem();
 		UsageModel usageModel = architecture.getUsageModel();
 		Repository altRepository = architecture.getRepositoryWithAlternatives();
-		
-		// copy 
+
+		// copy
 		if (repository != null && repository.eResource() != null) {
 			String fileLocation = createWorkingCopy(repository.eResource(), "repository", false);
 			workingCopy.setRepository(SQuATHelper.loadRepositoryModel(fileLocation));
@@ -174,7 +175,7 @@ public class PCMWorkingCopyCreator {
 
 			workingCopy.setAllocation(allocationCopy);
 		}
-		
+
 		workingCopy.setRepositoryWithAlternatives(architecture.getRepositoryWithAlternatives());
 
 		return workingCopy;
@@ -192,8 +193,8 @@ public class PCMWorkingCopyCreator {
 
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			while ((line = bufferedReader.readLine()) != null) {
-				if (line.contains("href=\"" + oldName)) {
-					line = line.replaceAll("href=\"" + oldName, "href=\"" + newName);
+				if (line.contains("href=\"" + oldName + ".")) {
+					line = line.replaceAll("href=\"" + oldName + "\\.", "href=\"" + newName + ".");
 				}
 				lines.add(line);
 			}
