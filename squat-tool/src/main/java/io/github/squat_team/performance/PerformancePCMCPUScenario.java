@@ -50,7 +50,6 @@ public class PerformancePCMCPUScenario extends AbstractPerformancePCMScenario {
 
 	private void setProcessingRateAttribute(ProcessingResourceSpecification resourceSpecification, double factor) {
 		PCMRandomVariable variable = resourceSpecification.getProcessingRate_ProcessingResourceSpecification();
-		System.out.println(variable.eClass().getEAllAttributes());
 
 		// search for processing rate attributes
 		EAttribute specification = null;
