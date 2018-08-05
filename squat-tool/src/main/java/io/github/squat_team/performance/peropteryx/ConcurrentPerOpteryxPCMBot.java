@@ -120,7 +120,7 @@ public class ConcurrentPerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 			List<PerOpteryxPCMResultImrpoved> peropteryxResult;
 			synchronized (ConcurrentPerOpteryxPCMBot.class) {
 				deactivateLog();
-				Future<List<PerOpteryxPCMResultImrpoved>> future = runPerOpteryx(copiedArchitecture, false);
+				Future<List<PerOpteryxPCMResultImrpoved>> future = runPerOpteryx(copiedArchitecture, true);
 				peropteryxResult = getPerOpteryxResults(future);
 				activateLog();
 			}
