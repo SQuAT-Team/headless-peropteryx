@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QMLDeclarations:QMLDeclarations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:QMLContract="http:///QMLContract.ecore" xmlns:QMLDeclarations="http:///QMLDeclarations.ecore" xmlns:QMLProfile="http:///QMLProfile.ecore" id="_SUsKsISNEeiYYb5QxR4GCA">
+  <qmlDeclarations xsi:type="QMLContract:SimpleQMLContract" id="_Zj9NwoSNEeiYYb5QxR4GCA">
+    <criteria xsi:type="QMLContract:Objective" id="_agUvYISNEeiYYb5QxR4GCA">
+      <dimension href="pathmap://PCM_MODELS/Dimension_responsetime.qmlcontracttype#_r_iVkKCrEd-s9uTaURbrKA"/>
+      <aspects xsi:type="QMLContract:Mean" id="_dWg5YoSNEeiYYb5QxR4GCA"/>
+    </criteria>
+    <contractType href="pathmap://PCM_MODELS/PCMStandardQMLContractType.qmldeclarations#_r_iViKCrEd-s9uTaURbrKA"/>
+  </qmlDeclarations>
+  <qmlDeclarations xsi:type="QMLProfile:SimpleQMLProfile" id="_nmO1sISNEeiYYb5QxR4GCA">
+    <usageModel href="cocome-cloud.usagemodel#/"/>
+    <requirements xsi:type="QMLProfile:UsageScenarioRequirement" id="_oFs_8ISNEeiYYb5QxR4GCA" requireContract="_Zj9NwoSNEeiYYb5QxR4GCA">
+      <usageScenario href="cocome-cloud.usagemodel#_VgwxwHr3Eeek77WF10mCCg"/>
+    </requirements>
+  </qmlDeclarations>
+</QMLDeclarations:QMLDeclarations>
