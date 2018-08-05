@@ -17,7 +17,7 @@ import io.github.squat_team.util.PCMFileFinder;
  * folder of the PCM instance.
  */
 public class LQNSDetailedResultWriter {
-	private static final String FILE_EXTENSION = "detailed";
+	public static final String FILE_EXTENSION = "detailed";
 	private PerformanceResult<NamedElement> result;
 
 	public static File determineFileDestination(PCMArchitectureInstance pcmInstance) throws IOException {
