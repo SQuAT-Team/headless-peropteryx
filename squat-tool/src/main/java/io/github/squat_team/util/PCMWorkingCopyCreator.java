@@ -193,9 +193,9 @@ public class PCMWorkingCopyCreator {
 
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			while ((line = bufferedReader.readLine()) != null) {
-				if (line.contains("href=\"" + oldName + ".")) {
-					line = line.replaceAll("href=\"" + oldName + "\\.", "href=\"" + newName + ".");
-				}
+					line = line.replaceAll("href=\".*\\.system#", "href=\"" + newName + ".system#");
+					line = line.replaceAll("href=\".*\\.repository#", "href=\"" + newName + ".repository#");
+					line = line.replaceAll("href=\".*\\.resourceenvironment#", "href=\"" + newName + ".resourceenvironment#");
 				lines.add(line);
 			}
 			fileReader.close();
