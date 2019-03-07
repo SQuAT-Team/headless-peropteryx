@@ -47,7 +47,7 @@ public class ConcurrentPerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 
 	public ConcurrentPerOpteryxPCMBot(AbstractPerformancePCMScenario scenario,
 			ConfigurationImprovedImproved configuration) {
-		super(scenario, configuration);
+		super(scenario, ConcurrentPerOpteryxPCMBot.QA_PERFORMANCE, configuration);
 		botName = generateUniqueName();
 	}
 

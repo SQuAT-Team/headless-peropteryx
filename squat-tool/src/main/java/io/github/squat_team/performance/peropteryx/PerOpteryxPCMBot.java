@@ -40,15 +40,16 @@ public class PerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 	 *            and a designdecision file will be generated automatically, if no
 	 *            path is given. Some values will be added or overwritten later.
 	 */
-	public PerOpteryxPCMBot(AbstractPerformancePCMScenario scenario, ConfigurationImprovedImproved configuration, String botName) {
-		super(scenario, configuration, botName);
+	public PerOpteryxPCMBot(AbstractPerformancePCMScenario scenario, ConfigurationImprovedImproved configuration,
+			String botName) {
+		super(scenario, PerOpteryxPCMBot.QA_PERFORMANCE, configuration, botName);
 	}
 
 	@Override
 	public PCMScenarioResult analyze(PCMArchitectureInstance currentArchitecture) {
 		return analyze(currentArchitecture, this.botName);
 	}
-	
+
 	@Override
 	public PCMScenarioResult analyze(PCMArchitectureInstance currentArchitecture, String botName) {
 		PCMScenarioResult result;
@@ -56,7 +57,7 @@ public class PerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 		currentModelName = (new PCMFileFinder(currentArchitecture)).getName();
 		try {
 			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator(botName);
-			PCMArchitectureInstance copiedArchitecture = workingCopyCreator.createWorkingCopy(currentArchitecture);		
+			PCMArchitectureInstance copiedArchitecture = workingCopyCreator.createWorkingCopy(currentArchitecture);
 			performanceScenario.transform(copiedArchitecture);
 			configureWith(copiedArchitecture);
 			configureWith(this.performanceScenario);
@@ -70,7 +71,8 @@ public class PerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 				analyzeDetailed(copiedArchitecture, currentArchitecture);
 			}
 			SQuATHelper.delete(copiedArchitecture);
-			result = LQNSResultConverter.convert(currentArchitecture, lqnsResult, performanceScenario.getMetric(), this);
+			result = LQNSResultConverter.convert(currentArchitecture, lqnsResult, performanceScenario.getMetric(),
+					this);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			result = null;

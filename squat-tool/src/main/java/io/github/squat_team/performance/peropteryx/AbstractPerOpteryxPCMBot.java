@@ -56,17 +56,17 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 	private PerOpteryxConfigImproved.Mode configurationModeInitial;
 	private Level loglevel;
 
-	public AbstractPerOpteryxPCMBot(AbstractPerformancePCMScenario scenario,
+	public AbstractPerOpteryxPCMBot(AbstractPerformancePCMScenario scenario, String qualityAttribute,
 			ConfigurationImprovedImproved configuration, String botName) {
-		super(scenario);
+		super(scenario, qualityAttribute);
 		this.configuration = configuration;
 		this.performanceScenario = scenario;
 		this.botName = botName;
 	}
 
-	public AbstractPerOpteryxPCMBot(AbstractPerformancePCMScenario scenario,
+	public AbstractPerOpteryxPCMBot(AbstractPerformancePCMScenario scenario, String qualityAttribute,
 			ConfigurationImprovedImproved configuration) {
-		super(scenario);
+		super(scenario, qualityAttribute);
 		this.configuration = configuration;
 		this.performanceScenario = scenario;
 	}
@@ -178,7 +178,8 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 		}
 	}
 
-	protected Future<List<PerOpteryxPCMResultImrpoved>> runPerOpteryx(PCMArchitectureInstance architecture, boolean headlessPerOpteryxMode) {
+	protected Future<List<PerOpteryxPCMResultImrpoved>> runPerOpteryx(PCMArchitectureInstance architecture,
+			boolean headlessPerOpteryxMode) {
 		modifyDesigndecisionFile(architecture);
 		MyHeadlessPerOpteryxRunnerImrpoved runner = new MyHeadlessPerOpteryxRunnerImrpoved();
 		runner.init(configuration);
@@ -232,8 +233,8 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 		configureBoundaryValue(scenario.getExpectedResult().getResponse());
 		String qmlPath = configuration.getPerOpteryxConfig().getQmlDefinitionFile();
 		if (qmlPath == null || qmlPath.isEmpty()) {
-			String generatedQmlFilePath = PerOpteryxQMLConverter
-					.convert(currentModelName, configuration.getPcmInstanceConfig().getUsageModel(), getBotName(), scenario);
+			String generatedQmlFilePath = PerOpteryxQMLConverter.convert(currentModelName,
+					configuration.getPcmInstanceConfig().getUsageModel(), getBotName(), scenario);
 			configuration.getPerOpteryxConfig().setQmlDefinitionFile(generatedQmlFilePath);
 		}
 	}
