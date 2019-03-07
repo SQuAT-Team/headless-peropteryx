@@ -13,6 +13,7 @@ import org.palladiosimulator.solver.models.PCMInstance;
 
 import de.fakeller.performance.analysis.result.PerformanceResult;
 import io.github.squat_team.model.PCMArchitectureInstance;
+import io.github.squat_team.model.PCMScenario;
 import io.github.squat_team.model.PCMScenarioResult;
 import io.github.squat_team.performance.AbstractPerformancePCMScenario;
 import io.github.squat_team.performance.lqns.LQNSDetailedResultWriter;
@@ -45,8 +46,13 @@ public class ConcurrentPerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 	private static volatile int idCounter = 0;
 	private static final Logger LOGGER = Logger.getLogger(ConcurrentPerOpteryxPCMBot.class.getName());
 
-	public ConcurrentPerOpteryxPCMBot(AbstractPerformancePCMScenario scenario,
-			ConfigurationImprovedImproved configuration) {
+	/**
+	 * @param scenario
+	 *            An instance of {@link AbstractPerformancePCMScenario} is expected
+	 *            as input.
+	 * @param configuration
+	 */
+	public ConcurrentPerOpteryxPCMBot(PCMScenario scenario, ConfigurationImprovedImproved configuration) {
 		super(scenario, ConcurrentPerOpteryxPCMBot.QA_PERFORMANCE, configuration);
 		botName = generateUniqueName();
 	}

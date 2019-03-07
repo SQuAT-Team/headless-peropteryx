@@ -20,6 +20,7 @@ import de.fakeller.palladio.config.PcmModelConfig;
 import io.github.squat_team.AbstractPCMBot;
 import io.github.squat_team.model.OptimizationType;
 import io.github.squat_team.model.PCMArchitectureInstance;
+import io.github.squat_team.model.PCMScenario;
 import io.github.squat_team.model.PCMScenarioResult;
 import io.github.squat_team.performance.AbstractPerformancePCMScenario;
 import io.github.squat_team.performance.peropteryx.configuration.ConfigurationImprovedImproved;
@@ -56,19 +57,39 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 	private PerOpteryxConfigImproved.Mode configurationModeInitial;
 	private Level loglevel;
 
-	public AbstractPerOpteryxPCMBot(AbstractPerformancePCMScenario scenario, String qualityAttribute,
+	/**
+	 * 
+	 * @param scenario
+	 *            An instance of {@link AbstractPerformancePCMScenario} is expected
+	 *            as input.
+	 * @param qualityAttribute
+	 * @param configuration
+	 * @param botName
+	 */
+	public AbstractPerOpteryxPCMBot(PCMScenario scenario, String qualityAttribute,
 			ConfigurationImprovedImproved configuration, String botName) {
-		super(scenario, qualityAttribute);
-		this.configuration = configuration;
-		this.performanceScenario = scenario;
+		this(scenario, qualityAttribute, configuration);
 		this.botName = botName;
 	}
 
-	public AbstractPerOpteryxPCMBot(AbstractPerformancePCMScenario scenario, String qualityAttribute,
+	/**
+	 * 
+	 * @param scenario
+	 *            An instance of {@link AbstractPerformancePCMScenario} is expected
+	 *            as input.
+	 * @param qualityAttribute
+	 * @param configuration
+	 */
+	public AbstractPerOpteryxPCMBot(PCMScenario scenario, String qualityAttribute,
 			ConfigurationImprovedImproved configuration) {
 		super(scenario, qualityAttribute);
 		this.configuration = configuration;
-		this.performanceScenario = scenario;
+		if (scenario instanceof AbstractPerformancePCMScenario) {
+			this.performanceScenario = (AbstractPerformancePCMScenario) scenario;
+		} else {
+			throw new IllegalArgumentException(
+					"A scenario of type " + AbstractPerformancePCMScenario.class.getName() + " is expected as inputF");
+		}
 	}
 
 	public String getBotName() {

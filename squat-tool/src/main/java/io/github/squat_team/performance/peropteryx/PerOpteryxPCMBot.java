@@ -11,6 +11,7 @@ import org.palladiosimulator.solver.models.PCMInstance;
 
 import de.fakeller.performance.analysis.result.PerformanceResult;
 import io.github.squat_team.model.PCMArchitectureInstance;
+import io.github.squat_team.model.PCMScenario;
 import io.github.squat_team.model.PCMScenarioResult;
 import io.github.squat_team.performance.AbstractPerformancePCMScenario;
 import io.github.squat_team.performance.lqns.LQNSResultConverter;
@@ -33,6 +34,8 @@ public class PerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 	 * directory! If the bot fails, null/a empty list will be returned.
 	 * 
 	 * @param scenario
+	 *            An instance of {@link AbstractPerformancePCMScenario} is expected
+	 *            as input.
 	 * @param configuration
 	 *            the configuration should at least contain the paths to the general
 	 *            pcm files (not the instance!) and the paths for the export of the
@@ -40,7 +43,7 @@ public class PerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 	 *            and a designdecision file will be generated automatically, if no
 	 *            path is given. Some values will be added or overwritten later.
 	 */
-	public PerOpteryxPCMBot(AbstractPerformancePCMScenario scenario, ConfigurationImprovedImproved configuration,
+	public PerOpteryxPCMBot(PCMScenario scenario, ConfigurationImprovedImproved configuration,
 			String botName) {
 		super(scenario, PerOpteryxPCMBot.QA_PERFORMANCE, configuration, botName);
 	}
