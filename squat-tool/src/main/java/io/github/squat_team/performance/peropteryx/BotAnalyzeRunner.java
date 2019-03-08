@@ -22,7 +22,7 @@ public class BotAnalyzeRunner implements Runnable {
 	@Override
 	public void run() {
 		result = bot.analyze(architecture);
-		System.out.println("Bot " + bot.getBotName() + " finished analysis");
+		System.out.println("Bot " + bot.getName() + " finished analysis");
 	}
 
 	public PCMScenarioResult getResult() {

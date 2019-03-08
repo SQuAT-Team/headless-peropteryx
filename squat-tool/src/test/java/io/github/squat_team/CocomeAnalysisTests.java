@@ -18,6 +18,7 @@ import io.github.squat_team.performance.peropteryx.configuration.ConfigurationIm
  * Provides tests for the analysis of Cocome.
  */
 public class CocomeAnalysisTests extends AbstractCocomeTests {
+	private static final String BOT_NAME = "PB1";
 
 	/**
 	 * Can be changed to debug failing tests.
@@ -34,7 +35,7 @@ public class CocomeAnalysisTests extends AbstractCocomeTests {
 		ConfigurationImprovedImproved configuration = setupBasicConfiguration();
 		AbstractPerformancePCMScenario scenario = setupNullScenario();
 
-		ConcurrentPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(scenario, configuration);
+		ConcurrentPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(BOT_NAME, scenario, configuration);
 		bot.setDebugMode(DEBUG_MODE);
 		PCMArchitectureInstance architecture = loadArchitecture("test", MODEL_NAME_1, ALTERNATIVE_REPOSITORY_NAME_1);
 
@@ -55,7 +56,7 @@ public class CocomeAnalysisTests extends AbstractCocomeTests {
 		ConfigurationImprovedImproved configuration = setupBasicConfiguration();
 		AbstractPerformancePCMScenario scenario = setupNullScenario();
 
-		ConcurrentPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(scenario, configuration);
+		ConcurrentPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(BOT_NAME, scenario, configuration);
 		bot.setDebugMode(DEBUG_MODE);
 		PCMArchitectureInstance architecture = loadArchitecture("test", MODEL_NAME_1, ALTERNATIVE_REPOSITORY_NAME_1);
 
@@ -82,7 +83,7 @@ public class CocomeAnalysisTests extends AbstractCocomeTests {
 		ConfigurationImprovedImproved configuration = setupBasicConfiguration();
 		AbstractPerformancePCMScenario scenario = setupNullScenario();
 
-		ConcurrentPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(scenario, configuration);
+		ConcurrentPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(BOT_NAME, scenario, configuration);
 		bot.setDebugMode(DEBUG_MODE);
 		bot.setDetailedAnalysis(true);
 		PCMArchitectureInstance architecture = loadArchitecture("test", MODEL_NAME_1, ALTERNATIVE_REPOSITORY_NAME_1);
@@ -114,7 +115,7 @@ public class CocomeAnalysisTests extends AbstractCocomeTests {
 		ConfigurationImprovedImproved configuration = setupBasicConfiguration();
 		AbstractPerformancePCMScenario scenario = setupWorkloadScenario();
 
-		ConcurrentPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(scenario, configuration);
+		ConcurrentPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(BOT_NAME, scenario, configuration);
 		bot.setDebugMode(DEBUG_MODE);
 		PCMArchitectureInstance architecture = loadArchitecture("test", MODEL_NAME_1, ALTERNATIVE_REPOSITORY_NAME_1);
 
@@ -135,7 +136,7 @@ public class CocomeAnalysisTests extends AbstractCocomeTests {
 		ConfigurationImprovedImproved configuration = setupBasicConfiguration();
 		AbstractPerformancePCMScenario scenario = setupCPUScenario();
 
-		ConcurrentPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(scenario, configuration);
+		ConcurrentPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(BOT_NAME, scenario, configuration);
 		bot.setDebugMode(DEBUG_MODE);
 		PCMArchitectureInstance architecture = loadArchitecture("test", MODEL_NAME_1, ALTERNATIVE_REPOSITORY_NAME_1);
 
@@ -156,7 +157,7 @@ public class CocomeAnalysisTests extends AbstractCocomeTests {
 		ConfigurationImprovedImproved configuration = setupBasicConfiguration();
 		AbstractPerformancePCMScenario scenario = setupUsageScenario();
 
-		ConcurrentPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(scenario, configuration);
+		ConcurrentPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(BOT_NAME, scenario, configuration);
 		bot.setDebugMode(DEBUG_MODE);
 		PCMArchitectureInstance architecture = loadArchitecture("test", MODEL_NAME_1, ALTERNATIVE_REPOSITORY_NAME_1);
 

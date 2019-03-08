@@ -23,6 +23,10 @@ import io.github.squat_team.performance.peropteryx.configuration.ConfigurationIm
  * Provides tests related to concurrent runs of the Performance Bot.
  */
 public class CocomeConcurrentTests extends AbstractCocomeTests {
+	private static final String BOT_NAME1 = "PB1";
+	private static final String BOT_NAME2 = "PB2";
+	private static final String BOT_NAME3 = "PB3";
+	private static final String BOT_NAME4 = "PB4";
 
 	/**
 	 * Can be changed to debug failing tests.
@@ -37,7 +41,7 @@ public class CocomeConcurrentTests extends AbstractCocomeTests {
 
 		@Override
 		public void run() {
-			bot = new ConcurrentPerOpteryxPCMBot(null, null);
+			bot = new ConcurrentPerOpteryxPCMBot(null, null, null);
 		}
 
 		public ConcurrentPerOpteryxPCMBot getBot() {
@@ -74,7 +78,7 @@ public class CocomeConcurrentTests extends AbstractCocomeTests {
 		// Add the names into a set
 		Set<String> names = new HashSet<>();
 		for (BotRunner runner : runners) {
-			names.add(runner.getBot().getBotName());
+			names.add(runner.getBot().getID());
 		}
 
 		// Elements in set should be number of bots
@@ -105,13 +109,13 @@ public class CocomeConcurrentTests extends AbstractCocomeTests {
 		PCMArchitectureInstance architecture4 = loadArchitecture("test4", MODEL_NAME_4, ALTERNATIVE_REPOSITORY_NAME_4);
 
 		// Prepare Bots
-		AbstractPerOpteryxPCMBot bot1 = new ConcurrentPerOpteryxPCMBot(scenario1, configuration1);
+		AbstractPerOpteryxPCMBot bot1 = new ConcurrentPerOpteryxPCMBot(BOT_NAME1, scenario1, configuration1);
 		bot1.setDebugMode(DEBUG_MODE);
-		AbstractPerOpteryxPCMBot bot2 = new ConcurrentPerOpteryxPCMBot(scenario2, configuration2);
+		AbstractPerOpteryxPCMBot bot2 = new ConcurrentPerOpteryxPCMBot(BOT_NAME2, scenario2, configuration2);
 		bot2.setDebugMode(DEBUG_MODE);
-		AbstractPerOpteryxPCMBot bot3 = new ConcurrentPerOpteryxPCMBot(scenario3, configuration3);
+		AbstractPerOpteryxPCMBot bot3 = new ConcurrentPerOpteryxPCMBot(BOT_NAME3, scenario3, configuration3);
 		bot3.setDebugMode(DEBUG_MODE);
-		AbstractPerOpteryxPCMBot bot4 = new ConcurrentPerOpteryxPCMBot(scenario4, configuration4);
+		AbstractPerOpteryxPCMBot bot4 = new ConcurrentPerOpteryxPCMBot(BOT_NAME4, scenario4, configuration4);
 		bot4.setDebugMode(DEBUG_MODE);
 
 		// Execute Search For Alternative
@@ -172,13 +176,13 @@ public class CocomeConcurrentTests extends AbstractCocomeTests {
 		AbstractPerformancePCMScenario scenario4 = setupUsageScenario();
 
 		// Prepare Bots
-		AbstractPerOpteryxPCMBot bot1 = new ConcurrentPerOpteryxPCMBot(scenario1, configuration1);
+		AbstractPerOpteryxPCMBot bot1 = new ConcurrentPerOpteryxPCMBot(BOT_NAME1, scenario1, configuration1);
 		bot1.setDebugMode(DEBUG_MODE);
-		AbstractPerOpteryxPCMBot bot2 = new ConcurrentPerOpteryxPCMBot(scenario2, configuration2);
+		AbstractPerOpteryxPCMBot bot2 = new ConcurrentPerOpteryxPCMBot(BOT_NAME2, scenario2, configuration2);
 		bot2.setDebugMode(DEBUG_MODE);
-		AbstractPerOpteryxPCMBot bot3 = new ConcurrentPerOpteryxPCMBot(scenario3, configuration3);
+		AbstractPerOpteryxPCMBot bot3 = new ConcurrentPerOpteryxPCMBot(BOT_NAME3, scenario3, configuration3);
 		bot3.setDebugMode(DEBUG_MODE);
-		AbstractPerOpteryxPCMBot bot4 = new ConcurrentPerOpteryxPCMBot(scenario4, configuration4);
+		AbstractPerOpteryxPCMBot bot4 = new ConcurrentPerOpteryxPCMBot(BOT_NAME4, scenario4, configuration4);
 		bot4.setDebugMode(DEBUG_MODE);
 
 		// Execute Search For Alternative

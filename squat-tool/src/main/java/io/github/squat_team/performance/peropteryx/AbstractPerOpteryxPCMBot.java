@@ -42,7 +42,7 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 	private static Logger logger = Logger.getLogger(AbstractPerOpteryxPCMBot.class.getName());
 
 	// Bot State
-	protected String botName;
+	protected String id;
 	protected String currentModelName;
 	protected ConfigurationImprovedImproved configuration;
 	protected AbstractPerformancePCMScenario performanceScenario;
@@ -59,30 +59,32 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 
 	/**
 	 * 
+	 * @param name
 	 * @param scenario
 	 *            An instance of {@link AbstractPerformancePCMScenario} is expected
 	 *            as input.
 	 * @param qualityAttribute
 	 * @param configuration
-	 * @param botName
+	 * @param id
 	 */
-	public AbstractPerOpteryxPCMBot(PCMScenario scenario, String qualityAttribute,
-			ConfigurationImprovedImproved configuration, String botName) {
-		this(scenario, qualityAttribute, configuration);
-		this.botName = botName;
+	public AbstractPerOpteryxPCMBot(String name, PCMScenario scenario, String qualityAttribute,
+			ConfigurationImprovedImproved configuration, String id) {
+		this(name, scenario, qualityAttribute, configuration);
+		this.id = id;
 	}
 
 	/**
 	 * 
+	 * @param name
 	 * @param scenario
 	 *            An instance of {@link AbstractPerformancePCMScenario} is expected
 	 *            as input.
 	 * @param qualityAttribute
 	 * @param configuration
 	 */
-	public AbstractPerOpteryxPCMBot(PCMScenario scenario, String qualityAttribute,
+	public AbstractPerOpteryxPCMBot(String name, PCMScenario scenario, String qualityAttribute,
 			ConfigurationImprovedImproved configuration) {
-		super(scenario, qualityAttribute);
+		super(name, scenario, qualityAttribute);
 		this.configuration = configuration;
 		if (scenario instanceof AbstractPerformancePCMScenario) {
 			this.performanceScenario = (AbstractPerformancePCMScenario) scenario;
@@ -92,8 +94,8 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 		}
 	}
 
-	public String getBotName() {
-		return botName;
+	public String getID() {
+		return id;
 	}
 
 	public Boolean getDebugMode() {
@@ -255,7 +257,7 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 		String qmlPath = configuration.getPerOpteryxConfig().getQmlDefinitionFile();
 		if (qmlPath == null || qmlPath.isEmpty()) {
 			String generatedQmlFilePath = PerOpteryxQMLConverter.convert(currentModelName,
-					configuration.getPcmInstanceConfig().getUsageModel(), getBotName(), scenario);
+					configuration.getPcmInstanceConfig().getUsageModel(), getID(), scenario);
 			configuration.getPerOpteryxConfig().setQmlDefinitionFile(generatedQmlFilePath);
 		}
 	}
@@ -276,7 +278,7 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 			} else if (configuration.getPerOpteryxConfig().getMode().equals(Mode.DESIGN_DECISIONS_AND_OPTIMIZE)) {
 				PCMFileFinder fileFinder = new PCMFileFinder(architecture);
 				String designDecisionPath = fileFinder.getPath() + File.separator + currentModelName + "-"
-						+ this.getBotName() + ".designdecision";
+						+ this.getID() + ".designdecision";
 				configuration.getPerOpteryxConfig().setDesignDecisionFile("file:" + designDecisionPath);
 				runDesignDecisionCreation();
 				modifyDesignDecisionFile(new File(designDecisionPath));

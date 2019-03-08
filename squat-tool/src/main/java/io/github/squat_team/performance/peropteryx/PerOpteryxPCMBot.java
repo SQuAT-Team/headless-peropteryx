@@ -33,6 +33,7 @@ public class PerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 	 * solver) to optimize architectures. All PCM files have to be in the same
 	 * directory! If the bot fails, null/a empty list will be returned.
 	 * 
+	 * @paran name the name of the bot.
 	 * @param scenario
 	 *            An instance of {@link AbstractPerformancePCMScenario} is expected
 	 *            as input.
@@ -42,24 +43,24 @@ public class PerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 	 *            pcm models (should not contain other data/folders!). A QML file
 	 *            and a designdecision file will be generated automatically, if no
 	 *            path is given. Some values will be added or overwritten later.
+	 * @param id
+	 *            a (unique) id for a performance bot.
 	 */
-	public PerOpteryxPCMBot(PCMScenario scenario, ConfigurationImprovedImproved configuration,
-			String botName) {
-		super(scenario, PerOpteryxPCMBot.QA_PERFORMANCE, configuration, botName);
+	public PerOpteryxPCMBot(String name, PCMScenario scenario, ConfigurationImprovedImproved configuration, String id) {
+		super(name, scenario, PerOpteryxPCMBot.QA_PERFORMANCE, configuration, id);
 	}
 
 	@Override
 	public PCMScenarioResult analyze(PCMArchitectureInstance currentArchitecture) {
-		return analyze(currentArchitecture, this.botName);
+		return analyze(currentArchitecture, this.id);
 	}
 
-	@Override
-	public PCMScenarioResult analyze(PCMArchitectureInstance currentArchitecture, String botName) {
+	private PCMScenarioResult analyze(PCMArchitectureInstance currentArchitecture, String botId) {
 		PCMScenarioResult result;
 		loadTemporarilyChangedConfiurationValues();
 		currentModelName = (new PCMFileFinder(currentArchitecture)).getName();
 		try {
-			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator(botName);
+			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator(botId);
 			PCMArchitectureInstance copiedArchitecture = workingCopyCreator.createWorkingCopy(currentArchitecture);
 			performanceScenario.transform(copiedArchitecture);
 			configureWith(copiedArchitecture);

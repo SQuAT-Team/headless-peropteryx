@@ -24,7 +24,7 @@ public class BotSearchForAlternativesRunner implements Runnable {
 	@Override
 	public void run() {
 		results = bot.searchForAlternatives(architecture);
-		System.out.println("Bot " + bot.getBotName() + " finished search for alternatives");
+		System.out.println("Bot " + bot.getName() + " finished search for alternatives");
 	}
 
 	public List<PCMScenarioResult> getResult() {

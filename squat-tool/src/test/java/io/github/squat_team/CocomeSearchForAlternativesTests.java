@@ -24,6 +24,8 @@ import io.github.squat_team.performance.peropteryx.configuration.ConfigurationIm
  * Provides tests for the search for alternatives on Cocome.
  */
 public class CocomeSearchForAlternativesTests extends AbstractCocomeTests {
+	private static final String BOT_NAME = "PB1";
+	
 	/**
 	 * Can be changed to debug failing tests.
 	 */
@@ -46,7 +48,7 @@ public class CocomeSearchForAlternativesTests extends AbstractCocomeTests {
 		PCMArchitectureInstance architecture = loadArchitecture("test", MODEL_NAME_1, ALTERNATIVE_REPOSITORY_NAME_1);
 
 		// Prepare Bot
-		AbstractPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(scenario, configuration);
+		AbstractPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(BOT_NAME, scenario, configuration);
 		bot.setDebugMode(DEBUG_MODE);
 
 		// Execute Search For Alternative
@@ -98,7 +100,7 @@ public class CocomeSearchForAlternativesTests extends AbstractCocomeTests {
 		PCMArchitectureInstance architecture = loadArchitecture("test", MODEL_NAME_1, ALTERNATIVE_REPOSITORY_NAME_1);
 
 		// Prepare Bot
-		AbstractPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(scenario, configuration);
+		AbstractPerOpteryxPCMBot bot = new ConcurrentPerOpteryxPCMBot(BOT_NAME, scenario, configuration);
 		bot.setDebugMode(DEBUG_MODE);
 
 		// Execute Search For Alternative

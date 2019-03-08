@@ -47,14 +47,16 @@ public class ConcurrentPerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 	private static final Logger LOGGER = Logger.getLogger(ConcurrentPerOpteryxPCMBot.class.getName());
 
 	/**
+	 * 
+	 * @param name
 	 * @param scenario
 	 *            An instance of {@link AbstractPerformancePCMScenario} is expected
 	 *            as input.
 	 * @param configuration
 	 */
-	public ConcurrentPerOpteryxPCMBot(PCMScenario scenario, ConfigurationImprovedImproved configuration) {
-		super(scenario, ConcurrentPerOpteryxPCMBot.QA_PERFORMANCE, configuration);
-		botName = generateUniqueName();
+	public ConcurrentPerOpteryxPCMBot(String name, PCMScenario scenario, ConfigurationImprovedImproved configuration) {
+		super(name, scenario, ConcurrentPerOpteryxPCMBot.QA_PERFORMANCE, configuration);
+		id = generateUniqueName();
 	}
 
 	/**
@@ -74,7 +76,7 @@ public class ConcurrentPerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 		loadTemporarilyChangedConfiurationValues();
 		currentModelName = (new PCMFileFinder(currentArchitecture)).getName();
 		try {
-			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator(currentModelName, botName);
+			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator(currentModelName, id);
 			PCMArchitectureInstance copiedArchitecture = workingCopyCreator.createWorkingCopy(currentArchitecture);
 			performanceScenario.transform(copiedArchitecture);
 			configureWith(copiedArchitecture);
@@ -102,17 +104,12 @@ public class ConcurrentPerOpteryxPCMBot extends AbstractPerOpteryxPCMBot {
 	}
 
 	@Override
-	public synchronized PCMScenarioResult analyze(PCMArchitectureInstance currentArchitecture, String botName) {
-		return analyze(currentArchitecture);
-	}
-
-	@Override
 	public synchronized List<PCMScenarioResult> searchForAlternatives(PCMArchitectureInstance currentArchitecture) {
 		List<PCMScenarioResult> results;
 		loadTemporarilyChangedConfiurationValues();
 		currentModelName = (new PCMFileFinder(currentArchitecture)).getName();
 		try {
-			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator(currentModelName, botName);
+			PCMWorkingCopyCreator workingCopyCreator = new PCMWorkingCopyCreator(currentModelName, id);
 			PCMArchitectureInstance copiedArchitecture = workingCopyCreator.createWorkingCopy(currentArchitecture);
 			PCMRepositoryModifier repositoryModifier = new PCMRepositoryModifier(copiedArchitecture);
 			repositoryModifier.mergeRepositories();
