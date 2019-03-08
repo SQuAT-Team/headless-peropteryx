@@ -84,7 +84,7 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 	 */
 	public AbstractPerOpteryxPCMBot(String name, PCMScenario scenario, String qualityAttribute,
 			ConfigurationImprovedImproved configuration) {
-		super(name, scenario, qualityAttribute);
+		super(name, scenario, qualityAttribute, true);
 		this.configuration = configuration;
 		if (scenario instanceof AbstractPerformancePCMScenario) {
 			this.performanceScenario = (AbstractPerformancePCMScenario) scenario;
