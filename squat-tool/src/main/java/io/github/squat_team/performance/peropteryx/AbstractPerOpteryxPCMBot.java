@@ -17,12 +17,14 @@ import de.fakeller.palladio.analysis.pcm2lqn.runner.PcmLqnsAnalyzerConfig;
 import de.fakeller.palladio.analysis.pcm2lqn.runner.PcmLqnsAnalyzerContext;
 import de.fakeller.palladio.analysis.provider.FileSystemProvider;
 import de.fakeller.palladio.config.PcmModelConfig;
+import edu.squat.transformations.ArchitecturalVersion;
 import io.github.squat_team.AbstractPCMBot;
 import io.github.squat_team.model.OptimizationType;
 import io.github.squat_team.model.PCMArchitectureInstance;
 import io.github.squat_team.model.PCMScenario;
 import io.github.squat_team.model.PCMScenarioResult;
 import io.github.squat_team.performance.AbstractPerformancePCMScenario;
+import io.github.squat_team.performance.ArchitecturalCopyCreator;
 import io.github.squat_team.performance.peropteryx.configuration.ConfigurationImprovedImproved;
 import io.github.squat_team.performance.peropteryx.configuration.PerOpteryxConfigImproved;
 import io.github.squat_team.performance.peropteryx.configuration.PerOpteryxConfigImproved.Mode;
@@ -40,6 +42,7 @@ import io.github.squat_team.util.PCMRepositoryModifier;
  */
 public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 	private static Logger logger = Logger.getLogger(AbstractPerOpteryxPCMBot.class.getName());
+	private ArchitecturalCopyCreator copyCreator = ArchitecturalCopyCreator.getInstance();
 
 	// Bot State
 	protected String id;
@@ -92,6 +95,11 @@ public abstract class AbstractPerOpteryxPCMBot extends AbstractPCMBot {
 			throw new IllegalArgumentException(
 					"A scenario of type " + AbstractPerformancePCMScenario.class.getName() + " is expected as inputF");
 		}
+	}
+	
+	@Override
+	public ArchitecturalVersion transformCandidate(PCMArchitectureInstance candidate) {
+		return copyCreator.copy(candidate, this);
 	}
 
 	public String getID() {
