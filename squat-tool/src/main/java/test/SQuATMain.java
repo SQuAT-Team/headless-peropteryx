@@ -28,10 +28,12 @@ import io.github.squat_team.model.PCMScenarioResult;
 import io.github.squat_team.model.ResponseMeasureType;
 import io.github.squat_team.performance.PerformanceMetric;
 import io.github.squat_team.performance.PerformancePCMCPUScenario;
+import io.github.squat_team.performance.PerformancePCMUsageScenario;
 import io.github.squat_team.performance.PerformancePCMWokloadScenario;
 import io.github.squat_team.performance.AbstractPerformancePCMScenario;
 import io.github.squat_team.performance.peropteryx.PerOpteryxPCMBot;
 import io.github.squat_team.performance.peropteryx.configuration.ConfigurationImprovedImproved;
+import io.github.squat_team.performance.peropteryx.configuration.DesigndecisionConfigImproved;
 import io.github.squat_team.performance.peropteryx.start.OptimizationInfoImrpoved;
 import io.github.squat_team.util.SQuATHelper;
 import test.TestConstants;
@@ -40,6 +42,7 @@ import test.TestConstants;
  * Main class to run the SQuAT Performance Bot
  */
 public class SQuATMain {
+	private static final String BOT_NAME = "PB1";
 	private static Boolean multiOptimisation = false;
 
 	private static void register() {
@@ -56,13 +59,25 @@ public class SQuATMain {
 
 		// create scenario
 		ArrayList<String> workloadIDs = new ArrayList<String>();
-		//workloadIDs.add(TestConstants.WORKLOAD_ID);
+		workloadIDs.add(TestConstants.WORKLOAD_ID);
 		
 		ArrayList<String> cpuIDs = new ArrayList<String>();
 		cpuIDs.add(TestConstants.CPU_ID);
 
-		//AbstractPerformancePCMScenario scenario = new PerformancePCMWokloadScenario(OptimizationType.MINIMIZATION, workloadIDs, 0.5);
-		AbstractPerformancePCMScenario scenario = new PerformancePCMCPUScenario(OptimizationType.MINIMIZATION, cpuIDs, 0.5);
+		ArrayList<String> loopIDs = new ArrayList<String>();
+		loopIDs.add(TestConstants.LOOP_ID);		
+
+		// Null-Scenario
+		AbstractPerformancePCMScenario scenario = new PerformancePCMWokloadScenario(OptimizationType.MINIMIZATION, workloadIDs, 1.0);
+
+		// Scenario 1: Workload +10%
+		// AbstractPerformancePCMScenario scenario = new PerformancePCMWokloadScenario(OptimizationType.MINIMIZATION, workloadIDs, 1.1);
+		// Scenario 2: Workload +50%
+		//AbstractPerformancePCMScenario scenario = new PerformancePCMWokloadScenario(OptimizationType.MINIMIZATION, workloadIDs, 1.5);
+		// Scenario 3: Fail of a Server in a 2-server-cluster
+		//AbstractPerformancePCMScenario scenario = new PerformancePCMCPUScenario(OptimizationType.MINIMIZATION, cpuIDs, 0.5);
+		// Scenario 4: Users buy more products (other distribution for barcode scanning)
+		//AbstractPerformancePCMScenario scenario = new PerformancePCMUsageScenario(OptimizationType.MINIMIZATION, loopIDs, TestConstants.LOOP_DISTRIBUTION);
 		
 		PCMResult expectedResponse = new PCMResult(ResponseMeasureType.DECIMAL);
 		expectedResponse.setResponse(6.0);
@@ -73,17 +88,24 @@ public class SQuATMain {
 		ConfigurationImprovedImproved configuration = new ConfigurationImprovedImproved();
 		// configuration.getPerOpteryxConfig().setDesignDecisionFile(TestConstants.DESIGNDECISION_FILE_PATH);
 		// configuration.getPerOpteryxConfig().setQmlDefinitionFile(TestConstants.QML_FILE_PATH);
-		configuration.getPerOpteryxConfig().setGenerationSize(100);
-		configuration.getPerOpteryxConfig().setMaxIterations(10);
+		configuration.getPerOpteryxConfig().setGenerationSize(10);
+		configuration.getPerOpteryxConfig().setMaxIterations(2);
 
 		configuration.getLqnsConfig().setLqnsOutputDir(TestConstants.LQN_OUTPUT);
 		configuration.getExporterConfig().setPcmOutputFolder(TestConstants.PCM_STORAGE_PATH);
 		configuration.getPcmModelsConfig().setPathmapFolder(TestConstants.PCM_MODEL_FILES);
 
+		// Design Decision Adjustment
+		DesigndecisionConfigImproved designdecisionConfig = configuration.getDesignDecisionConfig();
+		designdecisionConfig.setLimits("_78qo4K2UEeaxN4gXuIkS2A", 100, 6000);
+		designdecisionConfig.setLimits("_-5Q84K2UEeaxN4gXuIkS2A", 110, 6100);
+		designdecisionConfig.setLimits("_BgmykK2VEeaxN4gXuIkS2A", 120, 6200);
+		designdecisionConfig.setLimits("_FM6FMK2VEeaxN4gXuIkS2A", 130, 6300);
+		
 		// init bot
-		PerOpteryxPCMBot bot = new PerOpteryxPCMBot(scenario, configuration,"Bot");
-		bot.setDebugMode(false);
-		bot.setDetailedAnalysis(true);
+		PerOpteryxPCMBot bot = new PerOpteryxPCMBot(BOT_NAME, scenario, configuration, "testbot1");
+		bot.setDebugMode(true);
+		bot.setDetailedAnalysis(false);
 
 		List<String> basicPaths = new ArrayList<String>();
 
@@ -122,7 +144,7 @@ public class SQuATMain {
 			if (multiOptimisation) {
 				configuration.getExporterConfig().setPcmOutputFolder(basicPath.replace("\\\\", "/"));
 			}
-
+			
 			// create Instance
 			Allocation allocation = SQuATHelper.loadAllocationModel("file:/" + basicPath + ".allocation");
 			org.palladiosimulator.pcm.system.System system = SQuATHelper
@@ -133,6 +155,8 @@ public class SQuATMain {
 			UsageModel usageModel = SQuATHelper.loadUsageModel("file:/" + basicPath + ".usagemodel");
 			PCMArchitectureInstance architecture = new PCMArchitectureInstance("", repository, system, allocation,
 					resourceenvironment, usageModel);
+			architecture.setRepositoryWithAlternatives(SQuATHelper.loadRepositoryModel("file:" + TestConstants.ALTERNATIVE_REPOSITORY_PATH));
+
 			// TODO: should not be used in multiOptimization
 		//	architecture.setRepositoryWithAlternatives(SQuATHelper.loadRepositoryModel("file:/" + TestConstants.ALTERNATIVE_REPOSITORY_PATH));
 
@@ -174,7 +198,7 @@ public class SQuATMain {
 			throws IOException {
 		// run bot analyse
 		long start = System.currentTimeMillis();
-		PCMScenarioResult result = bot.analyze(architecture,"");
+		PCMScenarioResult result = bot.analyze(architecture);
 		long end = System.currentTimeMillis();
 
 		File basicFile = new File(TestConstants.BASIC_FILE_PATH);
